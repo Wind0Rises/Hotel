@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.liu.ssm.mapper.SysUserMapper">
+	
+		<insert id="saveSysUser" parameterType="sysUser">
+			INSERT INTO `sys_user`(id,usercode,username,`password`,salt,locked) VALUES(#{id},#{usercode},#{username},#{password},#{salt},#{locked})
+		</insert>
+		
+		<update id="updateSysUserById" parameterType="sysUser">
+			update `sys_user` set usercode=#{usercode},username=#{username},`password`=#{password},salt=#{salt},locked=#{locked} WHERE id=#{id}
+		</update>
+		
+		<select id="getSysUserById" parameterType="string" resultType="sysUser">
+			select * from `sys_user` where id=#{id}
+		</select>
+		
+		<delete id="deleteSysUserById" parameterType="string">
+			delete from `sys_user` where id=#{id}
+		</delete>
+	</mapper>

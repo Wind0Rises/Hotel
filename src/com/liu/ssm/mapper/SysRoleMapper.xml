@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.liu.ssm.mapper.SysRoleMapper">
+	
+		<insert id="saveSysRole" parameterType="sysRole">
+			insert into `sys_role`(id,name,available,description) values(#{id},#{name},#{available},#{description})
+		</insert>
+		
+		<update id="updateSysRoleById" parameterType="sysRole">
+			update `sys_role` set id=#{id},name=#{name},available=#{available},description=#{description} where id=#{id}
+		</update>
+		
+		<select id="getSysRoleById" parameterType="string" resultType="sysRole">
+			select * from `sys_role` where id=#{id}
+		</select>
+		
+		<delete id="deleteSysRoleById" parameterType="string">
+			delete from `sys_Role` where id=#{id}
+		</delete>
+	</mapper>

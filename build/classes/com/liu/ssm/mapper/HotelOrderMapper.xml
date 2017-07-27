@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.liu.ssm.mapper.HotelOrderMapper">
+		<insert id="addHotelOrder" parameterType="hotelOrder">
+			insert into `hotel_order`(id,`date`,orderName,IDCard,phone,enterDate,`status`,outDate,other,roomId) values
+			(#{id},#{date},#{orderName},#{IDCard},#{phone},#{enterDate},#{status},#{outDate},#{other},#{roomId})
+		</insert>
+		<delete id="deleteHotelOrder" parameterType="string">
+			delete from `hotel_order` where id = #{id}
+		</delete>
+		<update id="updateHotelOrder" parameterType="hotelOrder">
+			update `hotel_order` set date=#{date},orderName=#{orderName},
+			IDCard=#{IDCard},phone=#{phone},enterDate=#{enterDate},status=#{status},outDate=#{outDate},other=#{other},roomId=#{roomId}
+			where id=#{id}
+		</update>
+		
+		<select id="getHotelOrderById" parameterType="string" resultType="hotelOrder">
+			select * from `hotel_order` where id = #{id}
+		</select>
+		
+		<select id="getOrderByPage" parameterType="Map" resultType="hotelOrder">
+			select * from `hotel_order` where 1 = 1
+			<if test="orderName != null">
+				<if test="orderName != ''">
+					and orderName like '%${orderName}%'
+				</if>
+			</if>
+			<if test="IDCard != null">
+				<if test="IDCard != ''">
+					and IDCard like '%${IDCard}%'			
+				</if>
+			</if>
+				limit #{startNo},#{pageSize}
+		</select>
+		
+		<select id="countHotelOrder" resultType="int">
+			select count(id) from `hotel_order`
+		</select>
+		
+		<select id="countByCondition" parameterType="Map" resultType="int">
+			SELECT COUNT(id) FROM hotel_order WHERE 1 = 1
+			<if test="orderName != null">
+				<if test="orderName != ''">
+					and orderName like '%${orderName}%'
+				</if>
+			</if>
+			<if test="IDCard != null">
+				<if test="IDCard != ''">
+					and IDCard like '%${IDCard}%'						
+				</if>
+			</if>
+		</select>
+	</mapper>
