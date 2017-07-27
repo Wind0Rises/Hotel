@@ -21,45 +21,45 @@
        	<div id="main">
        		<div id="address">
        			<a href="#" ><span class="glyphicon glyphicon-home"></span> Home</a>
-       			<span class="glyphicon glyphicon-menu-right"></span>&nbsp;&nbsp;&nbsp;<b>订单<c:choose><c:when test="${order == null }">添加</c:when><c:otherwise>编辑</c:otherwise> </c:choose></b>
+       			<span class="glyphicon glyphicon-menu-right"></span>&nbsp;&nbsp;&nbsp;<b>订单详情</b>
        		</div>
         		
         	<!-- 下面是edit主体部分 -->
         	<!--  -->	
         	<div style="padding-left: 60px;border: solid red 1px;">
-        		<form class="form-horizontal" id="form_edit">
+        		<div class="form-horizontal" id="form_edit" style="margin-top:50px;">
         			<input type="hidden" name="id" id="id" value="${order.id }" />
         			<input type="hidden" name="date" id="date" value="${order.date }" />
 					<div class="form-group">
 				    	<label for="orderName" class="col-sm-2 control-label">预定人姓名：</label>
 					    <div class="col-sm-10">
-					      	<input class="form-control" id="orderName" name="orderName" value="${order.orderName }" placeholder="请填写预定人姓名">
+					      	<input class="form-control" id="orderName" name="orderName" value="${order.orderName }" disabled>
 					    </div>
 				  	</div>
 				  	<div class="form-group">
 				    	<label for="IDCard" class="col-sm-2 control-label">身份证号：</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="IDCard" id="IDCard" value="${order.IDCard }" placeholder="请填写身份证号">
+					      <input type="text" class="form-control" name="IDCard" id="IDCard" value="${order.IDCard }" disabled>
 					    </div>
 					</div>
 					<div class="form-group">
 				    	<label for="phone" class="col-sm-2 control-label">联系方式：</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="phone" id="phone" value="${order.phone }" placeholder="请填写身份证号">
+					      <input type="text" class="form-control" name="phone" id="phone" value="${order.phone }" disabled>
 					    </div>
 					</div>
 					
 					<div class="form-group">
 				    	<label for="outDate" class="col-sm-2 control-label">预计退房时间：</label>
 					    <div class="col-sm-10">
-					    	<input type="text" class="form-control date_form" name="outDate" id="outDate" value="${order.outDate }" placeholder="填写退房时间" data-date-format="yyyy-mm-dd hh:ii"> 		     
+					    	<input type="text" class="form-control date_form" name="outDate" id="outDate" value="${order.outDate }" disabled data-date-format="yyyy-mm-dd hh:ii"> 		     
 					    </div>
 					</div>
 					
 					<div class="form-group">
 				    	<label for="enterDate" class="col-sm-2 control-label">预计退房时间：</label>
 					    <div class="col-sm-10">
-					    	<input type="text" class="form-control date_form" name="enterDate" id="enterDate" value="${order.enterDate }" placeholder="填写退房时间" data-date-format="yyyy-mm-dd hh:ii"> 		     
+					    	<input type="text" class="form-control date_form" name="enterDate" id="enterDate" value="${order.enterDate }" disabled data-date-format="yyyy-mm-dd hh:ii"> 		     
 					    </div>
 					</div>
 					
@@ -69,32 +69,37 @@
 					    <div class="col-sm-10">
 					    	<c:choose>
 					    		<c:when test="${order.status != null}">
-					    			<input type="radio" id="status" name="status" value="1" <c:if test="${order.status == 1 }">checked</c:if> />入住中
-					    			<input type="radio" id="status" name="status" value="0" <c:if test="${order.status == 0 }">checked</c:if> />订单已结束
+					    			<input type="radio" id="status" name="status" disabled value="1" <c:if test="${order.status == 1 }">checked</c:if> />入住中
+					    			<input type="radio" id="status" name="status" disabled value="0" <c:if test="${order.status == 0 }">checked</c:if> />订单已结束
 					    		</c:when>
 					    		<c:otherwise>
-					    			<input type="radio" id="status" name="status" value="1" checked />入住中
-					    			<input type="radio" id="status" name="status" value="0"  />订单已结束
+					    			<input type="radio" id="status" name="status" disabled value="1" checked />入住中
+					    			<input type="radio" id="status" name="status" disabled value="0"  />订单已结束
 					    		</c:otherwise>
 					    	</c:choose>
 					    </div>
 					</div>
 					
-					
 					<div class="form-group">
 				    	<label for="other" class="col-sm-2 control-label">备注：</label>
 					    <div class="col-sm-10">
-					      	<textarea class="form-control" name="other" name="other" rows="3" placeholder="备注信息">${order.other }</textarea>
+					      	<textarea class="form-control" name="other" name="other" rows="3" disabled >${order.other }</textarea>
 					    </div>
 					</div>
 					
+					<div class="form-group">
+				    	<label for="date" class="col-sm-2 control-label">预计退房时间：</label>
+					    <div class="col-sm-10">
+					    	<input type="text" class="form-control date_form" name="date" id="date" value="${order.date }" disabled data-date-format="yyyy-mm-dd hh:ii"> 		     
+					    </div>
+					</div>
 					
 					<div class="form-group">
 				    	<div class="col-sm-offset-2 col-sm-10">
-					      	<button type="submit" class="btn btn-primary">确定</button>
+					      	<button type="button" onclick="back()" class="btn btn-primary">返回</button>
 					    </div>
 				  	</div>
-				</form>
+				</div>
         	</div>
         		
         </div>
@@ -111,32 +116,14 @@
 			   $(".first").children(first_number).children("ul").children(second_number).css("background","red");
 		   	};
 		   	
-		   $("#enterDate").datetimepicker();
-		   $("#outDate").datetimepicker();
-		   
-		    
-		    //提交修改
-		    $("#form_edit").submit(function(){
-		    	$.ajax({
-		    		url:"<%=basePath %>order/save",
-		    		data: JSON.stringify($("#form_edit").serialize()),
-		    		dataType: 'json',
-		    		type: 'post',
-		    		success: function(data){
-		    			layer.confirm('恭喜您！修改成功,确定跳转到列表页面，取消留在当前页面',{
-		    				btn:['确定','取消']
-		    			},function(index){
-		    				location.href="<%=basePath %>order/list";
-		    			},function(){
-		    				location.reload();
-		    			});
-		    		},
-		    		error: function(){
-		    			console.log("保存error");
-		    		}
-		    	});
-		    	return false;
-		    });
+		   	/*
+		   		返回上一级
+		   	*/
+		   	var back = function(){
+		   		history.go(-1);
+		   	};
+		   	
+		   	
 		</script>
 	</body>
 </html>

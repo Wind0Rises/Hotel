@@ -5,21 +5,44 @@
 	
 	<mapper namespace="com.liu.ssm.mapper.HotelRoomMapper">
 		<insert id="addRoom" parameterType="hotelRoom">
-			insert into hotel_room(roomNO,level,original_price,now_price,status,description,spare)
-			value(#{roomNO},#{level},#{original_price},#{now_price},#{status},#{description},#{spare})
+			insert into hotel_room(roomNo,level,original_price,now_price,status,description,spare)
+			value(#{roomNo},#{level},#{original_price},#{now_price},#{status},#{description},#{spare})
 		</insert>
+		
+		<delete id="deleteRoom" parameterType="int">
+			delete from hotel_room where id = #{id}
+		</delete>
+		
+		<update id="updateRoom" parameterType="hotelRoom">
+			update hotel_room set roomNo=#{roomNo},level=#{level},original_price=#{original_price},
+					now_price=#{now_price},status=#{status},description=#{description},spare=#{spare}
+			where id = #{id}
+		</update>
+		
 		<select id="getRoomById" parameterType="int" resultType="hotelRoom">
 			select * from hotel_room where id = #{id}
 		</select>
-		<select id="getRoomPage" parameterType="Map" resultType="hotelRoom">
-			select * from hotel_room limit #{startNo},#{pageSize}
-		</select>
+		
 		<select id="getRoomByRoomNo" parameterType="string" resultType="hotelRoom">
 			select * from hotel_room where id = #{roomNo}
 		</select>
-		<select id="totalNumber" resultType="int">
-			select count(id) from hotel_room
+		
+		<!-- 查询数据条数 -->
+		<select id="totalNumber" parameterType="Map" resultType="int">
+			select count(id) from hotel_room where 1=1 
+			<if test="roomNo != null " >
+				<if test="roomNo != '' ">
+					and roomNo = #{roomNo}
+				</if>
+			</if>
+			<if test="status != null ">
+				<if test="status != '' ">
+					and status = #{status}
+				</if>
+			</if>
 		</select>
+		
+		<!-- 条件分页查询 -->
 		<select id="getRoomByRoomNOAndStauts" parameterType="Map" resultType="hotelRoom">
 			select * from hotel_room where 1 = 1
 			<if test="roomNo != null " >
@@ -34,6 +57,5 @@
 			</if>
 			limit ${startNo},${pageSize}
 		</select>
-		
 		
 	</mapper>

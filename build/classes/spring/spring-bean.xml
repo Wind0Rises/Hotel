@@ -42,4 +42,28 @@
 		
 		<!-- 统一异常处理器 -->
 		<bean class="com.liu.other.exception.CustomExceptionResolver"></bean>
+		
+		<!-- 配置Mybatis的transaction -->
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource" ></property>
+		</bean>
+		
+		<tx:advice id="txAdvice" transaction-manager="transactionManager" >
+			<!--配置事务传播性，隔离级别以及超时回滚等问题 -->  
+			<tx:attributes>
+				<tx:method name="add*" propagation="REQUIRED" read-only="false" />
+				<tx:method name="update*" propagation="REQUIRED" read-only="false" />
+				<tx:method name="delete*" propagation="REQUIRED" read-only="false" />
+				<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+				<tx:method name="count*" propagation="REQUIRED" read-only="true" />
+			</tx:attributes>
+		</tx:advice>
+		
+		<!-- 使用AOP的方法配置事务 -->
+		<aop:config>
+			<aop:pointcut expression="execution(* com.liu.ssm.service.*.*(*))" id="pointcut"/>
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+		</aop:config>
+		
+		
 </beans>

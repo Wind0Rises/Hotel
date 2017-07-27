@@ -21,6 +21,17 @@ public class HotelRoomServiceImpl implements HotelRoomService{
 	public void addRoom(HotelRoom room) throws Exception {
 		hotelRoomMapper.addRoom(room);
 	}
+	
+	@Override
+	public void deleteRoom(int id) throws Exception {
+		hotelRoomMapper.deleteRoom(id);
+	}
+
+	@Override
+	public void updateRoom(HotelRoom room) throws Exception {
+		hotelRoomMapper.updateRoom(room);
+	}
+	
 
 	@Override
 	public HotelRoom getRoomById(int id) throws Exception {
@@ -33,21 +44,15 @@ public class HotelRoomServiceImpl implements HotelRoomService{
 	}
 
 	@Override
-	public List<HotelRoom> getRoomPage(int pageNO,int pageSize) throws Exception {
-		int start_number = (pageNO-1) * pageSize;
-		Map<String, Integer> map = new HashMap<>();
-		map.put("startNo", start_number);
-		map.put("pageSize", pageSize);
-		return hotelRoomMapper.getRoomPage(map);
+	public int totalNumber(String roomNo,String status) throws Exception {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("roomNo", roomNo);
+		map.put("status", status);
+		return hotelRoomMapper.totalNumber(map);
 	}
 
 	@Override
-	public int totalNumber() throws Exception {
-		return hotelRoomMapper.totalNumber();
-	}
-
-	@Override
-	public List<HotelRoom> getRoomByRoomNOAndStauts(String roomNo, int status,
+	public List<HotelRoom> getRoomByRoomNOAndStauts(String roomNo, String status,
 			int pageNo, int pageSize) throws Exception {
 		Map<String, String> map = new HashMap<>();
 		System.out.println("roomNO :" + roomNo + "status: " + status + "pageNO: " + pageNo +"pageSize:  " + pageSize);
@@ -59,5 +64,8 @@ public class HotelRoomServiceImpl implements HotelRoomService{
 		return hotelRoomMapper.getRoomByRoomNOAndStauts(map);
 	}
 
+
+
+	
 
 }

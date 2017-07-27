@@ -173,24 +173,31 @@
 		   		删除操作
 		   		layer有的skin：layui-layer-lan layui-layer-molv layer-ext-moon
 		   	*/
-		   	var deleteM = function(url){
-		   		$.ajax({
-		   			url: url,
-		   			type: 'get',
-		   			success: function(data){
-		   				layer.alert("恭喜您，删除成功!",{
-		   					icon: 6,
-		   					skin: 'layui-layer-lan',
-		   				},function(){
-		   					location.reload();
-		   				});
-		   			},
-		   			error: function(){
-		   				layer.alert("删除失败！",{
-		   					icon: 2,
-		   					skin:'layer-ext-moon',
-		   				});
-		   			}
+		   	var deleteM = function(_url){
+		   		layer.confirm("您确定要删除该条数据吗？",{
+		   			btn: ['确定','取消']
+		   		},function(){
+		   			$.ajax({
+			   			url: url,
+			   			type: 'get',
+			   			success: function(data){
+			   				console.log(data.message);
+			   				layer.alert("恭喜您，删除成功!",{
+			   					icon: 6,
+			   					skin: 'layui-layer-lan',
+			   				},function(){
+			   					location.reload();
+			   				});
+			   			},
+			   			error: function(){
+			   				layer.alert("删除失败！",{
+			   					icon: 2,
+			   					skin:'layer-ext-moon',
+			   				});
+			   			}
+			   		});
+		   		},function(){
+		   			//取消操作
 		   		});
 		   	};
 		   	

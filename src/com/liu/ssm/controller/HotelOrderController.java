@@ -35,7 +35,6 @@ public class HotelOrderController {
 	}
 	
 	/**
-	 * 
 	 * @author LWA
 	 * @description 不同和条件查询使用的同一个方法
 	 * @data 2017-7-19 下午11:39:34
@@ -70,7 +69,7 @@ public class HotelOrderController {
 	public ModelAndView edit(@RequestParam("id") String id){
 		ModelAndView mv = new ModelAndView("order/edit");
 		if (id != null) {
-			HotelOrder hotelOrder = hotelOrderService.getHotelOrderById(id);
+			HotelOrder  hotelOrder = hotelOrderService.getHotelOrderById(id);
 			mv.addObject("order",hotelOrder);
 		}
 		return mv;

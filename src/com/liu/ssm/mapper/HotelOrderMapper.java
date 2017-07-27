@@ -26,7 +26,6 @@ public interface HotelOrderMapper {
 	int countHotelOrder();
 	
 	/**
-	 * 
 	 * @author LWA
 	 * @description 条件orderName，IDCard查询个数
 	 * @data 2017-7-19 下午11:17:53

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,8 @@ import com.liu.ssm.service.HotelOrderService;
 
 @Component("hotelOrderService")
 public class HotelOrderServiceImpl implements HotelOrderService{
+	
+	Logger logger = Logger.getLogger(HotelOrderServiceImpl.class);
 	
 	@Autowired
 	private HotelOrderMapper hotelOrderMapper;

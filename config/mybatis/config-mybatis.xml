@@ -4,6 +4,9 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 	
 	<configuration>
+		<!-- <settings>
+			<setting name="cacheEnabled" value="true"></setting>
+		</settings> -->
 		<typeAliases>
 			<package name="com.liu.ssm.pojo"/>
 		</typeAliases>

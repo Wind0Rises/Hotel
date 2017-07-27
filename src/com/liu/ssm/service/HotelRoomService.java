@@ -8,13 +8,15 @@ public interface HotelRoomService {
 	
 	void addRoom(HotelRoom room) throws Exception;
 	
+	void deleteRoom(int id) throws Exception;
+	
+	void updateRoom(HotelRoom room) throws Exception;
+	
 	HotelRoom getRoomById(int id) throws Exception;
 	
 	HotelRoom getRoomByRoomNO(String roomNo) throws Exception;
 	
-	List<HotelRoom> getRoomPage(int pageNO,int pageSize) throws Exception;
+	int totalNumber(String roomNO,String status) throws Exception;
 	
-	int totalNumber() throws Exception;
-	
-	List<HotelRoom> getRoomByRoomNOAndStauts(String roomNo,int status,int pageNo,int pageSize) throws Exception;
+	List<HotelRoom> getRoomByRoomNOAndStauts(String roomNo,String status,int pageNo,int pageSize) throws Exception;
 }
