@@ -61,6 +61,7 @@ public class CustomRealm extends AuthorizingRealm{
 		
 		//从前台传来的
 		String code = (String) token.getPrincipal();
+		
 		SysUser sysUser = null;
 		
 		try {
@@ -74,9 +75,12 @@ public class CustomRealm extends AuthorizingRealm{
 		}
 		
 		String password = sysUser.getPassword();
+		
 		String salt = sysUser.getSalt();
 		
+		
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(code, password,ByteSource.Util.bytes(salt),this.getName());
+		
 		return info;
 	}
 
