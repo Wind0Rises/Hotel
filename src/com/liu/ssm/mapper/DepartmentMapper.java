@@ -1,5 +1,8 @@
 package com.liu.ssm.mapper;
 
-public class DepartmentMapper {
+import com.liu.other.sysinterface.MapperInterface;
+import com.liu.ssm.pojo.Department;
+
+public interface DepartmentMapper extends MapperInterface<Department>{
 
 }

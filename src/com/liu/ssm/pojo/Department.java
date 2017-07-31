@@ -9,6 +9,7 @@ public class Department {
 	//部门主管编号
 	private String SupervisorNo;
 	
+	//员工人数
 	private int departmentNumber;
 	
 	private String description;

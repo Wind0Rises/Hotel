@@ -18,9 +18,9 @@
        </li>  
         
         <li>
-        	<a href="#" class="inactive active">中国文联</a>  
+        	<a href="#" class="inactive active">公司管理</a>  
             <ul>  
-                <li><a class="content" href="#">综合部</a></li>  
+                <li><a class="content" href="<%=basePath %>department/list">部门管理</a></li>  
                 <li><a class="content" href="#">大型活动部</a></li>  
                 <li><a class="content" href="#">展览部</a></li>  
                 <li><a class="content" href="#">艺委会工作部</a></li>  

@@ -1,8 +1,5 @@
 package test;
 
-import java.util.Date;
-import java.util.List;
-
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+	<mapper namespace = "com.liu.ssm.mapper.DepartmentMapper">
+		<insert id="add" parameterType="department" >
+			INSERT INTO `hotel_mana_depa`(departmentNo,departmentName,SupervisorNo,departmentNumber,description,higherOfficeNo)
+			VALUE(#{departmentNo},#{departmentName},#{SupervisorNo},#{departmentNumber},#{description},#{higherOfficeNo}) 
+		</insert>
+		
+		<delete id="delete" parameterType="string">
+			DELETE FROM `hotel_mana_depa` WHERE departmentNo=#{id}
+		</delete>
+		
+		<update id="update">
+			UPDATE `hotel_mana_depa` SET departmentName=#{departmentName},SupervisorNo=#{SupervisorNo},departmentNumber = #{departmentNumber},description = #{description},higherOfficeNo = #{higherOfficeNo}
+			WHERE departmentNo = #{departmentNo}
+		</update>
+		
+		<select id="getById" parameterType="string" resultType="department" > 
+			SELECT * FROM `hotel_mana_depa` WHERE departmentNo = #{departmentNo}			
+		</select>
+	</mapper>
