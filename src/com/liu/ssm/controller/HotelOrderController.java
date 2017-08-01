@@ -103,6 +103,8 @@ public class HotelOrderController {
 	public ModelAndView add(){
 		return new ModelAndView("/order/edit");
 	}
+	
+	
 	/**
 	 * 
 	 * @author LWA

@@ -13,12 +13,35 @@
 			DELETE FROM `hotel_mana_depa` WHERE departmentNo=#{id}
 		</delete>
 		
-		<update id="update">
+		<update id="update" parameterType="department">
 			UPDATE `hotel_mana_depa` SET departmentName=#{departmentName},SupervisorNo=#{SupervisorNo},departmentNumber = #{departmentNumber},description = #{description},higherOfficeNo = #{higherOfficeNo}
 			WHERE departmentNo = #{departmentNo}
 		</update>
 		
 		<select id="getById" parameterType="string" resultType="department" > 
-			SELECT * FROM `hotel_mana_depa` WHERE departmentNo = #{departmentNo}			
+			SELECT * FROM `hotel_mana_depa` WHERE departmentNo = #{id}			
+		</select>
+		
+		<select id="totalNumber" parameterType="Map" resultType="int">
+			SELECT COUNT(*) FROM `hotel_mana_depa` WHERE 1 = 1 
+			<if test="departmentName != null">
+				<if test="departmentName != ''" >
+				 	and	departmentName LIKE '%${departmentName}%' 
+				</if>
+			</if>
+		</select> 
+		
+		<select id="getPage" parameterType="map" resultType="department" >
+			SELECT * FROM `hotel_mana_depa` WHERE 1 = 1 
+			<if test="departmentName != null">
+				<if test="departmentName != ''" >
+				 	and	departmentName LIKE '%${departmentName}%' 
+				</if>
+			</if>
+			limit ${startNo},${pageSize}
+		</select>
+		
+		<select id="getDepartmentByName" parameterType="string" resultType="department" >
+			SELECT * FROM `hotel_mana_depa` WHERE departmentName = #{departmentName}
 		</select>
 	</mapper>

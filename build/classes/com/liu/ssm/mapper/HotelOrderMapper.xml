@@ -11,7 +11,8 @@
 		<delete id="deleteHotelOrder" parameterType="string">
 			delete from `hotel_order` where id = #{id}
 		</delete>
-		<update id="updateHotelOrder" parameterType="hotelOrder">
+		
+		<update id="update" parameterType="hotelOrder">
 			update `hotel_order` set date=#{date},orderName=#{orderName},
 			IDCard=#{IDCard},phone=#{phone},enterDate=#{enterDate},status=#{status},outDate=#{outDate},other=#{other},roomId=#{roomId}
 			where id=#{id}

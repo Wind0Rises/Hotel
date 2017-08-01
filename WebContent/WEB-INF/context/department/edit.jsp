@@ -21,68 +21,43 @@
        	<div id="main">
        		<div id="address">
        			<a href="#" ><span class="glyphicon glyphicon-home"></span> Home</a>
-       			<span class="glyphicon glyphicon-menu-right"></span>&nbsp;&nbsp;&nbsp;<b>客房详情</b>
+       			<span class="glyphicon glyphicon-menu-right"></span>&nbsp;&nbsp;&nbsp;<b>客房<c:choose><c:when test="${department == null }">添加</c:when><c:otherwise>编辑</c:otherwise> </c:choose></b>
        		</div>
         		
         	<!-- 下面是edit主体部分 -->
         	<!--  -->	
         	<div style="padding-left: 60px;border: solid red 1px;">
         		<form class="form-horizontal" id="form_edit">
-        			<input type="hidden" name="id" id="id" value="${room.id }" />
+        			<input type="hidden" name="departmentNo" id="departmentNo" value="${department.departmentNo }" />
 					<div class="form-group">
-				    	<label for="roomNo" class="col-sm-2 control-label">房间号：</label>
+				    	<label for="roomNo" class="col-sm-2 control-label">部门名称：</label>
 					    <div class="col-sm-10">
-					      	<input class="form-control" id="roomNo" name="roomNo" value="${room.roomNo }" disabled >
+					      	<input class="form-control" id="departmentName" name="departmentName" value="${department.departmentName }" placeholder="请填写部门名称">
 					    </div>
 				  	</div>
-				  	<div class="form-group">
-				    	<label for="level" class="col-sm-2 control-label">楼层：</label>
+					<div class="form-group">
+				    	<label for="original_price" class="col-sm-2 control-label">部门领导：</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="level" id="level" value="${room.level }" disabled >
+					      <input type="text" class="form-control" name="supervisorNo" id="supervisorNo" value="${department.supervisorNo }" placeholder="请填写领导编号">
 					    </div>
 					</div>
 					<div class="form-group">
-				    	<label for="original_price" class="col-sm-2 control-label">房间原件：</label>
+				    	<label for="now_price" class="col-sm-2 control-label">上级部门：</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="original_price" id="original_price" value="${room.original_price }" disabled >
-					    </div>
-					</div>
-					<div class="form-group">
-				    	<label for="now_price" class="col-sm-2 control-label">房间现价：</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="now_price" id="now_price" value="${room.now_price }" disabled >
+					      <input type="text" class="form-control" name="higherOfficeNo" id="higherOfficeNo" value="${department.higherOfficeNo }" placeholder="请填写上级部门编号">
 					    </div>
 					</div>
 					
 					<div class="form-group">
-					    <label for="status" class="col-sm-2 control-label">预定状态：</label>
+				    	<label for="description" class="col-sm-2 control-label">部门描述：</label>
 					    <div class="col-sm-10">
-					    	<c:choose>
-					    		<c:when test="${room.status != null}">
-					    			<input type="radio" id="status" name="status" value="0" disabled <c:if test="${room.status == 0 }">checked</c:if> />空闲
-					    			<input type="radio" id="status" name="status" value="1" disabled <c:if test="${room.status == 1 }">checked</c:if> />入住中
-					    			<input type="radio" id="status" name="status" value="2" disabled <c:if test="${room.status == 2 }">checked</c:if> />清理中
-					    		</c:when>
-					    		<c:otherwise>
-					    			<input type="radio" id="status" name="status" value="0" disabled checked />空闲
-					    			<input type="radio" id="status" name="status" value="1" disabled  />入住中
-					    			<input type="radio" id="status" name="status" value="2" disabled  />清理中
-					    		</c:otherwise>
-					    	</c:choose>
+					      	<textarea class="form-control" name="description" name="description" rows="3" placeholder="描述（备注信息）">${department.description }</textarea>
 					    </div>
 					</div>
-					
-					
-					<div class="form-group">
-				    	<label for="description" class="col-sm-2 control-label">描述：</label>
-					    <div class="col-sm-10">
-					      	<textarea class="form-control" name="description" name="description" rows="3" disabled >${room.description }</textarea>
-					    </div>
-					</div>
-					
 					
 					<div class="form-group">
 				    	<div class="col-sm-offset-2 col-sm-10">
+					      	<button type="submit" class="btn btn-primary">确定</button>
 					      	<button type="button" class="btn btn-info" onclick="javascript:window.history.go(-1)" style="margin-left: 300px;">返回</button>
 					    </div>
 				  	</div>
@@ -92,7 +67,7 @@
         </div>
         <script type="text/javascript">
 			$(document).ready(function(){
-				menu(4,0);
+				menu(1,0);
 			});
 			
 			/*  显示菜单    */
@@ -110,14 +85,14 @@
 		    //提交修改
 		    $("#form_edit").submit(function(){
 		    	$.ajax({
-		    		url:"<%=basePath %>room/save",
+		    		url:"<%=basePath %>department/save",
 		    		data: $("#form_edit").serialize(),
 		    		type: 'post',
 		    		success: function(data){
 		    			layer.confirm(data.message,{
 		    				btn:['确定','取消']
 		    			},function(index){
-		    				location.href="<%=basePath %>room/list";
+		    				location.href="<%=basePath %>department/list";
 		    			},function(){
 		    				location.reload();
 		    			});

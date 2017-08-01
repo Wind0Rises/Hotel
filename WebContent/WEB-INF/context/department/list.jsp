@@ -8,6 +8,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<%@ include file="/WEB-INF/context/common/common_css.jsp"%>
 		<%@ include file="/WEB-INF/context/common/common_js.jsp"%>
+		<link rel="stylesheet" href="<%=basePath %>resource/css/common/comment-list.css">
 		<title>酒店管理系统</title>
 	</head>
 	<body>
@@ -22,33 +23,30 @@
        	<div id="main">
         		<div id="address">
         			<a href="#" ><span class="glyphicon glyphicon-home"></span> Home</a>
-        			<span class="glyphicon glyphicon-menu-right"></span>&nbsp;&nbsp;&nbsp;<b>订单详情</b>
+        			<span class="glyphicon glyphicon-menu-right"></span>&nbsp;&nbsp;&nbsp;<b>部门列表</b>
         		</div>
         		<div id="seach_from" class="form-inline" style="margin-top: 20px;">
 				  	<div class="form-group">
-				    	<label >预订人：</label>
-				    	<input type="text" id="orderName" name="orderName" class="form-control"  placeholder="预订人姓名">
+				    	<label >部门名称：</label>
+				    	<input type="text" id="departmentName" name="departmentName" class="form-control"  placeholder="部门名称">
 				  	</div>
-				  	<div class="form-group" id="second">
+				  	<!-- <div class="form-group" id="second">
 				    	<label >身份证：</label>
 				    	<input type="text" id="IDCard" name="IDCard" class="form-control"  placeholder="入住">
-				  	</div>
+				  	</div> -->
 				  	<button onclick="search()" type="button" class="btn btn-default">搜索</button>
-				  	<buttont style="margin-left: 200px;background: #467ca2;" type="button" class="btn btn-default"><a href="<%=basePath %>order/add" style="color: white;font-weight:700;">添加</a></button>
+				  	<button id="addBut" onclick="javascript:window.location.href='<%=basePath %>department/add'" type="button" class="btn btn-default" >添加</button>
 				</div>
 				<div class="table-responsive" id="mainBoby">
 				  	<table class="table">
 				   		<thead>
-				   			<tr>
+				   			<tr id="directory">
 				   				<td>#</td>
-					   			<td>订单人姓名</td>
-					   			<td>订单日期</td>
-					   			<td>身份证</td>
-					   			<td>联系方式</td>
-					   			<td>入住时间</td>
-					   			<td>退房时间</td>
-					   			<td>订单状态</td>
-					   			<td>房间id</td>
+					   			<td>部门名称</td>
+					   			<td>部门人数</td>
+					   			<td>部门领导</td>
+					   			<td>上级部门</td>
+					   			<td>部门描述</td>
 					   			<td>操作</td>
 				   			</tr>
 				   		</thead>
@@ -63,7 +61,7 @@
 		<script type="text/javascript">
 			var count;
 			$(document).ready(function(){
-				menu(4,1);
+				menu(1,0);
 				intiDate();
 			});
 			
@@ -77,17 +75,16 @@
 		   	
 		   	//数据初始化
 		   	var intiDate = function(){
-		   		var orderName = $("#orderName").val();
-		   		var IDCard = $("#IDCard").val();
-		   		
+		   		var departmentName = $("#departmentName").val();
 		   		$.ajax({
-		   			url: '<%=basePath%>order/intiData',
-		   			data: {"orderName":orderName,"IDCard":IDCard},
+		   			url: '<%=basePath%>department/intiData',
+		   			data: {"departmentName":departmentName},
 		   			type: 'post',
 		   			success: function(data){
+		   				console.log(data);
 		   			 	count = data.count;
 		   				$("#tbody").empty();
-		   				$("#tbody").html(replace(data.orders));
+		   				$("#tbody").html(replace(data.departments));
 		   				page();
 		   			},
 		   			error: function(){
@@ -111,17 +108,16 @@
 				});
 			   	
 			   	function PageCallback (index,js){
-			   	    var orderName = $("#orderName").val();
-			   		var IDCard = $("#IDCard").val();
+			   	    var departmentName = $("#departmentName").val();
 			   		
 			   		index += 1;
 			   		$.ajax({
-			   			url: '<%=basePath%>order/intiData',
-			   			data: {"correntPage":index,"orderName":orderName,"IDCard":IDCard},
+			   			url: '<%=basePath%>department/intiData',
+			   			data: {"correntPage":index,"departmentName":departmentName},
 			   			type: 'post',
 			   			success: function(data){
 			   				$("#tbody").empty();
-			   				$("#tbody").html(replace(data.orders));
+			   				$("#tbody").html(replace(data.departments));
 			   				
 			   			},
 			   			error: function(){
@@ -134,23 +130,20 @@
 		   	/*
 		   	
 		   	*/
-		   	function replace(orders){
+		   	function replace(listsData){
 		   		var html = "";
-		   		for(var i in orders){
+		   		for(var i in listsData){
 		   			html +=
 		   			"<tr>" +
 						"<td>"+ (i - (-1)) +"</td>" +
-						"<td>" + orders[i].orderName +"</td>" +
-						"<td>" + orders[i].date +"</td>" +
-						"<td>" + orders[i].IDCard +"</td>" +
-						"<td>" + orders[i].phone +"</td>" +
-						"<td>" + orders[i].enterDate +"</td>" +
-						"<td>" + orders[i].outDate +"</td>" +
-						"<td>" + orders[i].status +"</td>" +
-						"<td>" + orders[i].roomId +"</td>" +
-						"<td><a onclick=edit('<%=basePath%>order/edit?id=" + orders[i].id + "') >编辑</a><br />" + 
-							"<a onclick=deleteM('<%=basePath%>order/delete?id=" + orders[i].id + "') >删除</a><br />" +
-							"<a onclick=show('<%=basePath%>order/show?id=" + orders[i].id + "') >查看</a>" +
+						"<td>" + listsData[i].departmentName +"</td>" +
+						"<td>" + listsData[i].departmentNumber +"</td>" +
+						"<td>" + listsData[i].supervisorNo +"</td>" +
+						"<td>" + listsData[i].higherOfficeNo +"</td>" +
+						"<td>" + listsData[i].description +"</td>" +
+						"<td><a style='margin-left: 20px;text-decoration: none' onclick=edit('<%=basePath%>department/edit?id=" + listsData[i].departmentNo + "') >编辑</a>" + 
+							"<a style='margin-left: 20px;text-decoration: none' onclick=deleteM('<%=basePath%>department/delete?id=" + listsData[i].departmentNo + "') >删除</a>" +
+							"<a style='margin-left: 20px;text-decoration: none' onclick=show('<%=basePath%>department/show?id=" + listsData[i].departmentNo + "') >查看</a>" +
 						"</td>" +
 					"</tr>";
 		   		};
@@ -170,6 +163,13 @@
 		   	};
 		   	
 		   	/**
+		   		跳转到查看页面
+		   	*/
+		   	var show = function(url){
+		   		location.href= url;
+		   	};
+		   	
+		   	/**
 		   		删除操作
 		   		layer有的skin：layui-layer-lan layui-layer-molv layer-ext-moon
 		   	*/
@@ -178,7 +178,7 @@
 		   			btn: ['确定','取消']
 		   		},function(){
 		   			$.ajax({
-			   			url: url,
+			   			url: _url,
 			   			type: 'get',
 			   			success: function(data){
 			   				console.log(data.message);
@@ -201,12 +201,6 @@
 		   		});
 		   	};
 		   	
-		   	/*
-		   		跳转到查看页面
-		   	*/
-		   	var show = function(url){
-		   		location.href= url;
-		   	};
 		   	
 		   	
 		</script>
