@@ -22,6 +22,7 @@
      	<property name="unauthorizedUrl" value="/refuse" />
      	<property name="filterChainDefinitions">
      		<value>
+     			/department/** = anon
      			/student/anonStudent = anon
      			/resource/** = anon
      			/logout = logout
