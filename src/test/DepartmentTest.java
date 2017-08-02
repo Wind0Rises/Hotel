@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.liu.ssm.pojo.Department;
 import com.liu.ssm.service.DepartmentService;
+import com.liu.ssm.service.EmployeeService;
 
 public class DepartmentTest {
 	
@@ -23,11 +24,22 @@ public class DepartmentTest {
 			department.setDescription("描述" + i);
 			department.setHigherOfficeNo("shangji" + i);
 			departmentService.add(department);
-		}*/
+		}
 		
 		System.out.println(departmentService.getPage(null,1,10));
 		
 		System.out.println(departmentService.totalNumber(null));
+		*/
+		
+	}
+	
+	@Test
+	public void test1() {
+		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-bean.xml");
+		EmployeeService employeeService = (EmployeeService) context.getBean("employeeService");
+		
+		System.out.println(employeeService.getById("asdfa").getEmployeeName());
+		
 		
 	}
 }

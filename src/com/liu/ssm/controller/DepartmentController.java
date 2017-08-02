@@ -2,7 +2,6 @@ package com.liu.ssm.controller;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.liu.other.util.DateUtil;
 import com.liu.other.util.GenerateKeyUtil;
 import com.liu.ssm.pojo.Department;
-import com.liu.ssm.pojo.HotelOrder;
 import com.liu.ssm.service.DepartmentService;
 
 @Controller

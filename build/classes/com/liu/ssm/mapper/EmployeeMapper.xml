@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+	<mapper namespace = "com.liu.ssm.mapper.EmployeeMapper">
+		<insert id="add" parameterType="employee" >
+			INSERT INTO `hotal_mana_emp`(id,employeeName,age,`date`,images,`status`,salary,reward,departmentNo,postNo,description)
+			VALUES(#{id},#{employeeName},#{age},#{date},#{images},#{status},#{salary},#{reward},#{departmentNo},#{postNo},#{description})
+		</insert>
+		
+		<delete id="delete" parameterType="string">
+			delete from `hotal_mana_emp` where id = #{id}
+		</delete>
+		
+		<update id="update" parameterType="employee">
+			update `hotal_mana_emp` set employeeName = #{employeeName},age = #{age},date = #{date},images = #{images},
+			status = #{status},salary = #{salary},reward = #{reward},departmentNo = #{departmentNo},postNo = #{postNo},description = #{description}
+			where id = #{id}
+		</update>
+		
+		<select id="getById" parameterType="string" resultType="employee" > 
+			select * from `hotal_mana_emp` where id = #{id}
+		</select>
+		
+		<select id="totalNumber" parameterType="Map" resultType="int">
+			select count(*) from `hotal_mana_emp` where 1 = 1
+			<if test="employeeName != null">
+				<if test="employeeName != ''" >
+				 	and	employeeName LIKE '%${employeeName}%' 
+				</if>
+			</if>
+			<if test="date != null">
+				<if test="date != ''" >
+				 	and	date LIKE '%${date}%' 
+				</if>
+			</if>
+		</select> 
+		
+		<select id="getPage" parameterType="map" resultType="employee" >
+			select * from `hotal_mana_emp` where 1 = 1
+			<if test="employeeName != null">
+				<if test="employeeName != ''" >
+				 	and	employeeName LIKE '%${employeeName}%' 
+				</if>
+			</if>
+			<if test="date != null">
+				<if test="date != ''" >
+				 	and	date LIKE '%${date}%' 
+				</if>
+			</if>
+			limit ${startNo},${pageSize}
+		</select>
+	</mapper>
