@@ -1,7 +1,6 @@
 package com.liu.ssm.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.liu.ssm.pojo.HotelRoom;
 import com.liu.ssm.service.HotelRoomService;
 import com.sun.istack.internal.logging.Logger;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 
 @Controller
 @RequestMapping("/room/")

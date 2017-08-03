@@ -7,6 +7,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<%@ include file="/WEB-INF/context/common/common_css.jsp"%>
 		<%@ include file="/WEB-INF/context/common/common_js.jsp"%>	
+		<style type="text/css">
+			
+			
+		</style>
 		<title>酒店管理系统</title>
 	</head>
 	<body>
@@ -28,27 +32,15 @@
         	<!--  -->	
         	<div style="padding-left: 60px;border: solid red 1px;">
         		<form class="form-horizontal" id="form_edit">
-					<div class="form-group">
-				  		<label for="exampleInputFile" class="col-sm-2 control-label">上传图片</label>
-				  		<div class="col-sm-10">
-				  			<div class="col-sm-10" style="height: 200px;border: red solid 3px;">
-				  				<img alt="" style="width: 180px;height: 180px;margin-top: 10px;" src="http://bpic.588ku.com/back_pic/02/66/65/68578b3fca8af67.jpg!/fh/300/quality/90/unsharp/true/compress/true" class="img-rounded">
-				  				<img alt="" style="width: 180px;height: 180px;margin-top: 10px;" src="http://bpic.588ku.com/back_pic/02/66/65/68578b3fca8af67.jpg!/fh/300/quality/90/unsharp/true/compress/true" class="img-rounded">
-				  				<img alt="" style="width: 180px;height: 180px;margin-top: 10px;" src="http://bpic.588ku.com/back_pic/02/66/65/68578b3fca8af67.jpg!/fh/300/quality/90/unsharp/true/compress/true" class="img-rounded">
-				  			</div>
-							<input type="file" name="exampleInputFile" id="exampleInputFile">
-					    	<button type="button" class="btn btn-info" onclick="uploadImage()" >上传</button>				    
-					    </div>
-				 	</div>
         			<input type="hidden" name="id" id="id" value="${employee.id }" />
+					<input type="hidden" name="images" id="images" value="${employee.images }"  >
 					<div class="form-group">
 				    	<label for="employeeName" class="col-sm-2 control-label">姓名：</label>
 					    <div class="col-sm-10">
 					      	<input class="form-control" id="employeeName" name="employeeName" value="${employee.employeeName }" placeholder="请填写雇员姓名">
 					    </div>
 				  	</div>
-				  	
-					<div class="form-group">
+				  	<div class="form-group">
 				    	<label for="age" class="col-sm-2 control-label">年龄：</label>
 					    <div class="col-sm-10">
 					      <input type="text" class="form-control" name="age" id="age" value="${employee.age }" placeholder="请填写雇员年龄">
@@ -61,7 +53,6 @@
 					      <input type="text" class="form-control date_form" name="date" id="date" value="${employee.date }" id="datetimepicker" data-date-format="yyyy-mm-dd" placeholder="请填写入职日期">
 					    </div>
 					</div>
-					
 					<div class="form-group">
 				    	<label for="salary" class="col-sm-2 control-label">薪资：</label>
 					    <div class="col-sm-10">
@@ -75,7 +66,22 @@
 					      <input type="text" class="form-control" name="reward" id="reward" value="${employee.reward }" placeholder="请填写奖金">
 					    </div>
 					</div>
-					
+					<div class="form-group" id="imageContainer">
+				  		<label for="exampleInputFile" class="col-sm-2 control-label">上传图片:</label>
+				  		<div class="col-sm-10" id="leftImageContainer">
+				  			<div class="col-sm-12" id="imageContent">
+				  				<img alt="未上传" id="image_0"  style="width: 180px;height: 180px;margin-top: 10px;" src="" class="img-rounded imageClass0">
+				  				<div class="btn btn-primary  imageClass0" onclick="deleteImage(0)">删除</div>
+				  				<img alt="未上传" id="image_1"  style="width: 180px;height: 180px;margin-top: 10px;" src="" class="img-rounded imageClass1">
+				  				<div class="btn btn-primary  imageClass1" onclick="deleteImage(1)">删除</div>
+				  				<img alt="未上传" id="image_2"  style="width: 180px;height: 180px;margin-top: 10px;" src="" class="img-rounded imageClass2">
+				  				<div class="btn btn-primary  imageClass2" onclick="deleteImage(2)">删除</div>
+				  			</div>
+							<input type="file" name="exampleInputFile" id="exampleInputFile">
+					    	<button type="button" id="uploadBtn" class="btn btn-info" onclick="uploadImage()" >上传</button>				    
+					    </div>
+				 	</div>
+				  	
 					<div class="form-group">
 				    	<label for="departmentNo" class="col-sm-2 control-label">部门：</label>
 					    <div class="col-sm-10">
@@ -97,23 +103,6 @@
 					    </div>
 					</div>
 					
-					
-					
-					<div class="form-group">
-				    	<label for="images" class="col-sm-2 control-label">图片：</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="images" id="images" value="${employee.images }" placeholder="请填写入职日期">
-					    </div>
-					</div>
-					
-					<%--<div class="form-group">
-				    	<label for="status" class="col-sm-2 control-label">入住日期：</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="status" id="status" value="${employee.status }" placeholder="请填写入职日期">
-					    </div>
-					</div>
-					
-					--%>
 					<div class="form-group">
 				    	<div class="col-sm-offset-2 col-sm-10">
 					      	<button type="submit" class="btn btn-primary">确定</button>
@@ -128,6 +117,7 @@
         
 	       	$(document).ready(function(){
 				menu(1,1);
+				diaplayImage("${employee.images }");
 			});
 			
 			/*  显示菜单    */
@@ -147,6 +137,7 @@
 		    		url:"<%=basePath %>employee/save",
 		    		data: $("#form_edit").serialize(),
 		    		type: 'post',
+		    		async: false,
 		    		success: function(data){
 		    			layer.confirm(data.message,{
 		    				btn:['确定','取消']
@@ -157,16 +148,77 @@
 		    			});
 		    		},
 		    		error: function(){
-		    			console.log("保存error");
+		    			layer.msg("保存错误！");
 		    		}
 		    	});
 		    	return false;
 		    });
 		    
+		  	//删除文件
+	    	var deleteImage = function (i){
+	    		var imageId = "#image_" + i;
+	    		var src= $(imageId).attr("src");
+	    		var fileName = src.substr(src.lastIndexOf("/") +1);
+	    		
+			  	layer.confirm('您确定删除图片！？',{
+			  		btn: ['确定','取消']
+			  	},function(index){
+			  		layer.close(index);
+			  		$.ajax({
+			  			url: "<%=basePath %>employee/deleteImage",
+			    		type: "post",
+			    		data: {"fileName":fileName,"id":"${employee.id }"},
+			    		success: function(data){
+			    			var _images = $("[name = images]").val();
+			    			//把上传的图片加到input的value里去,并设给input里
+			    			var imageList = _images.split(",");
+			    			var valueImage = ""; 
+			    			for(var i in imageList){
+			    				if(imageList[i] == fileName){continue;};
+			    				valueImage += imageList[i] + ",";
+			    			}
+			    			valueImage = valueImage.substr(0,valueImage.length -1);
+			    			$("[name = images]").val(valueImage);
+			    			diaplayImage(valueImage);
+			    			layer.msg("删除成功！");
+			    		},
+			    		error: function(){
+			    			
+			    		}
+			  		});
+			  	},function(index){
+			  		layer.close(index);
+			  	});
+			  	
+	    		return false;
+	    	};
+	    	
+	    	//图片显示与加载
+	    	var diaplayImage = function(images){
+	    		var imageList = images.split(",");
+	    		//先隐藏
+	    		for(var i=0; i < 3;i++){
+	    			var imageClass = ".imageClass" + i;
+	    			$(imageClass).css("display","none");
+	    		}
+	    		
+	    		//循环设值和显示
+	    		if(images != null && images != ""){
+	    			for(var i in imageList){
+		    			var image_id = "#image_" + i;
+	    				$(image_id).attr("src","<%=basePath %>image/employee/" + imageList[i]);
+		    			var imageClass = ".imageClass" + i;
+		    			$(imageClass).css("display","block");
+		    		}
+	    		}
+	    	};
+	    	
+		    
 		    //上传图片
 		    function uploadImage(){
 		    	var formdata = new FormData();
 		    	formdata.append('file',$('#exampleInputFile')[0].files[0]);
+		    	formdata.append('id',"${employee.id }");
 		    	$.ajax({
 		    		url: "<%=basePath %>employee/upload",
 		    		type: "post",
@@ -175,36 +227,30 @@
 		    		data: formdata,
 		    		processData: false,
 		    		contentType: false,
-		    		success: function(){
-		    			alert("上传成功");
+		    		success: function(data){
+		    			var _images = $("[name = images]").val();
+		    			
+		    			//把上传的图片加到input的value里去,并设给input里
+		    			if(_images == null || _images == ""){
+		    				_images +=  data.fileName;
+		    			}else{
+		    				_images += "," + data.fileName;
+		    			}
+		    			
+		    			$("[name = images]").val(_images);
+		    			diaplayImage(_images);
+		    			
+		    			//清空file
+		    			var file = $("#exampleInputFile");
+		    			file.after(file.clone().val(""));
+		    			file.remove();
+		    			layer.msg(data.message);
 		    		},
 		    		error: function(){
-		    			alert("上传失败");
+		    			layer.msg("上传失败");
 		    		}
 		    	});
 		    	
-		    	<%-- alert(exampleInputFile);
-		    	console.log($('#exampleInputFile')[0].files[0]);
-		    	var files = $('input[name="exampleInputFile"]').prop('files');
-		    	
-		    	formData.append("file","asdf");
-		    	
-		    	console.log(files);
-		    	
-		    	console.log(files[0]);
-		    	
-		    	console.log(formData);
-		    	$.ajax({
-		    		url: "<%=basePath %>employee/upload",
-		    		type: "post",
-		    		data: {"exampleInputFile":exampleInputFile},
-		    		success: function(){
-		    			alert("上传成功");
-		    		},
-		    		error: function(){
-		    			alert("上传失败");
-		    		}
-		    	}); --%>
 		    };
 		</script>
 	</body>

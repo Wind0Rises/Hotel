@@ -1,7 +1,6 @@
 package com.liu.ssm.controller;
 
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.liu.other.util.GenerateKeyUtil;
-import com.liu.other.util.UploadUtil;
+import com.liu.other.util.UploadAndDownloadUtil;
 import com.liu.ssm.pojo.Employee;
 import com.liu.ssm.service.EmployeeService;
 
@@ -187,24 +186,91 @@ public class EmployeeController {
 		return mv;
 	}
 	
-	
+	/**
+	 * 
+	 * @author LWA
+	 * @Descrition 上传图片 并返回相应的文件名
+	 * @date 2017-8-3 上午11:15:25
+	 * @param multipartFile
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("upload")
 	@ResponseBody
-	public Map<String, Object> uploadImage(@RequestParam("file")MultipartFile multipartFile,HttpSession session) throws Exception{
-		
+	public Map<String, Object> uploadImage(@RequestParam("file")MultipartFile multipartFile,HttpSession session,
+			HttpServletRequest request) throws Exception{
 		Map<String, Object> map = new HashMap<String,Object>();
+		String id = request.getParameter("id");
 		
-		String url = session.getServletContext().getRealPath(UploadUtil.URL);
+		Employee employee = employeeService.getById(id);
+		String images = employee.getImages();
+		String[] imagesArray = images.split(",");
 		
+		System.out.println(imagesArray.length);
+		
+		if (imagesArray.length >= 3) {
+			map.put("message", "您已经上传三张图片了！不能在上传了");
+			return map;
+		}
+		
+		String url = session.getServletContext().getRealPath(UploadAndDownloadUtil.URL);
 		String fileName = multipartFile.getOriginalFilename();
 		
-		UploadUtil.uploadInputStream(multipartFile, url, fileName);
+		String newFileName = UploadAndDownloadUtil.uploadInputStream(multipartFile, url, fileName);
+		
+		if (images == null || images.isEmpty()) {
+			images += newFileName;
+		}else {
+			images += "," + newFileName;
+		}
+		
+		employee.setImages(images);
+		employeeService.update(employee);
 		
 		map.put("message", "上传成功");
-		
+		map.put("fileName", newFileName);
 		return map;
 	}
 	
+	/**
+	 * 
+	 * @author LWA
+	 * @Descrition 删除图片,前台已经删除成功后，进行数据库删除
+	 * @date 2017-8-3 下午4:24:40
+	 * @param request
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("deleteImage")
+	@ResponseBody
+	public Map<String, Object> deleteImage(HttpServletRequest request,HttpSession session){
+		Map<String, Object> map = new HashMap<String,Object>();
+		String id = request.getParameter("id");
+		String fileName = request.getParameter("fileName");
+		String url = session.getServletContext().getRealPath(UploadAndDownloadUtil.URL);
+		
+		Employee employee = employeeService.getById(id);
+		String images = employee.getImages();
+		if (images == null || images.isEmpty()) {
+			map.put("message", "没有资源可以删除！");
+		}
+		String[] imagesArray = images.split(",");
+		String newImages = "";
+		for (String item : imagesArray) {
+			if (item.equals(fileName)) continue; 
+			newImages += item + ",";
+		}
+		if (newImages != "") {
+			newImages = newImages.substring(0, newImages.length() - 1);
+		}
+		employee.setImages(newImages);
+		employeeService.update(employee);
+		
+		
+		map.put("message", UploadAndDownloadUtil.delete(url, fileName));
+		return map;
+	}
 	
 	
 	

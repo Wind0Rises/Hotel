@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,17 +15,23 @@ import org.springframework.web.multipart.MultipartFile;
  * @Descrition 上传工具类
  * @date 2017-8-2 下午6:50:59
  */
-public class UploadUtil {
+public class UploadAndDownloadUtil {
 	
+	//图片存放的地址
 	public static String URL = "image/employee";
 	
-	public static void uploadInputStream(MultipartFile multipartFile,String url,String fileName) throws Exception{
+	//图片名称的头信息
+	private static String IMAGE = "image";
+	
+	public static String uploadInputStream(MultipartFile multipartFile,String url,String fileName) throws Exception{
 		File fileUrl = new File(url);
 		if (!fileUrl.exists()) {
 			fileUrl.mkdirs();
 		}
 		
-		File file = new File(url,fileName);
+		String newFileName =  UploadAndDownloadUtil.imageString(fileName);
+		
+		File file = new File(url,newFileName);
 		if (!file.exists()) {
 			file.createNewFile();
 		}
@@ -33,6 +40,7 @@ public class UploadUtil {
 		BufferedInputStream bis = new BufferedInputStream(is);
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 		
+		@SuppressWarnings("unused")
 		byte[] arr = new byte[1024];
 		
 		int ch = 0;
@@ -45,8 +53,24 @@ public class UploadUtil {
 		
 		multipartFile.transferTo(file);
 		
-		
-		
+		return newFileName;
 	}
 	
+	
+	public static String delete(String url,String fileName){
+		File file = new File(url,fileName);
+		
+		if (!file.exists()) {
+			return "暂无相关文件";
+		}
+		
+		file.delete();
+		
+		return "删除成功";
+	}
+	
+	private static String imageString(String fileName){
+		String dateString = String.valueOf(new Date().getTime());
+		return  IMAGE + dateString + fileName;
+	}
 }
