@@ -5,7 +5,7 @@
 		
 	<mapper namespace = "com.liu.ssm.mapper.DepartmentMapper">
 		<insert id="add" parameterType="department" >
-			INSERT INTO `hotel_mana_depa`(departmentNo,departmentName,SupervisorNo,departmentNumber,description,higherOfficeNo)
+			INSERT INTO `hotel_mana_depa`(departmentNo,departmentName,SupervisorNo,departmentNumber,description,higherOfficeNo,phone,email)
 			VALUE(#{departmentNo},#{departmentName},#{SupervisorNo},#{departmentNumber},#{description},#{higherOfficeNo}) 
 		</insert>
 		
@@ -14,7 +14,8 @@
 		</delete>
 		
 		<update id="update" parameterType="department">
-			UPDATE `hotel_mana_depa` SET departmentName=#{departmentName},SupervisorNo=#{SupervisorNo},departmentNumber = #{departmentNumber},description = #{description},higherOfficeNo = #{higherOfficeNo}
+			UPDATE `hotel_mana_depa` SET departmentName=#{departmentName},SupervisorNo=#{SupervisorNo},departmentNumber = #{departmentNumber},
+			description = #{description},higherOfficeNo = #{higherOfficeNo}
 			WHERE departmentNo = #{departmentNo}
 		</update>
 		

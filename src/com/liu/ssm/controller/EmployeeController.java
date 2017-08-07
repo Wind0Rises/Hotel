@@ -107,7 +107,7 @@ public class EmployeeController {
 	 */
 	@RequestMapping("add")
 	public ModelAndView add(){
-		return new ModelAndView("/department/edit");
+		return new ModelAndView("/employee/edit");
 	}
 	
 	/**
@@ -128,7 +128,8 @@ public class EmployeeController {
 		String employeeName = request.getParameter("employeeName");
 		int age = Integer.parseInt(request.getParameter("age"));
 		String date = request.getParameter("date");
-		String images = request.getParameter("images");
+		String phone = request.getParameter("phone");
+		String email = request.getParameter("email");
 		int status = Integer.parseInt(request.getParameter("status"));
 		double salary = Double.parseDouble(request.getParameter("salary"));
 		double reward = Double.parseDouble(request.getParameter("reward"));
@@ -136,7 +137,7 @@ public class EmployeeController {
 		String postNo = request.getParameter("postNo");
 		String description = request.getParameter("description");
 		
-		if (id == null) {
+		if (id == null || id.isEmpty()) {
 			//this is add
 			employee = new Employee();
 			employee.setId(GenerateKeyUtil.GenerateByDate());
@@ -148,16 +149,19 @@ public class EmployeeController {
 		employee.setEmployeeName(employeeName);
 		employee.setAge(age);
 		employee.setDate(date);
-		employee.setImages(images);
 		employee.setStatus(status);
 		employee.setSalary(salary);
 		employee.setReward(reward);
 		employee.setDepartmentNo(departmentNo);
 		employee.setPostNo(postNo);
 		employee.setDescription(description);
+		employee.setEmail(email);
+		employee.setPhone(phone);
 		
-		if (id == null) {
+		if (id == null || id.isEmpty()) {
 			//this is add
+			String images = request.getParameter("images");
+			employee.setImages(images);
 			employeeService.add(employee);
 			map.put("message", "添加成功！确定跳转到列表页面，取消留在编辑页面！");
 		}else {
@@ -179,9 +183,9 @@ public class EmployeeController {
 	 */
 	@RequestMapping("show")
 	public ModelAndView show(@RequestParam("id") String id){
-		ModelAndView mv = new ModelAndView("department/show");
+		ModelAndView mv = new ModelAndView("employee/show");
 		if (id != null) {
-			mv.addObject("department",employeeService.getById(id));
+			mv.addObject("employee",employeeService.getById(id));
 		}
 		return mv;
 	}
@@ -201,35 +205,37 @@ public class EmployeeController {
 	public Map<String, Object> uploadImage(@RequestParam("file")MultipartFile multipartFile,HttpSession session,
 			HttpServletRequest request) throws Exception{
 		Map<String, Object> map = new HashMap<String,Object>();
+		
 		String id = request.getParameter("id");
-		
-		Employee employee = employeeService.getById(id);
-		String images = employee.getImages();
-		String[] imagesArray = images.split(",");
-		
-		System.out.println(imagesArray.length);
-		
-		if (imagesArray.length >= 3) {
-			map.put("message", "您已经上传三张图片了！不能在上传了");
-			return map;
+		if (id != null && !(id.isEmpty())) {
+			Employee employee = employeeService.getById(id);
+			String images = employee.getImages();
+			String[] imagesArray = images.split(",");
+			if (imagesArray.length >= 3) {
+				map.put("message", "您已经上传三张图片了！不能在上传了");
+				return map;
+			}
+			//上传操作
+			String url = session.getServletContext().getRealPath(UploadAndDownloadUtil.URL);
+			String fileName = multipartFile.getOriginalFilename();
+			String newFileName = UploadAndDownloadUtil.uploadInputStream(multipartFile, url, fileName);
+			if (images == null || images.isEmpty()) {
+				images += newFileName;
+			}else {
+				images += "," + newFileName;
+			}
+			employee.setImages(images);
+			employeeService.update(employee);
+			map.put("fileName", newFileName);
+		}else{
+			//上传操作
+			String url = session.getServletContext().getRealPath(UploadAndDownloadUtil.URL);
+			String fileName = multipartFile.getOriginalFilename();
+			String newFileName = UploadAndDownloadUtil.uploadInputStream(multipartFile, url, fileName);
+			map.put("fileName", newFileName);
 		}
-		
-		String url = session.getServletContext().getRealPath(UploadAndDownloadUtil.URL);
-		String fileName = multipartFile.getOriginalFilename();
-		
-		String newFileName = UploadAndDownloadUtil.uploadInputStream(multipartFile, url, fileName);
-		
-		if (images == null || images.isEmpty()) {
-			images += newFileName;
-		}else {
-			images += "," + newFileName;
-		}
-		
-		employee.setImages(images);
-		employeeService.update(employee);
 		
 		map.put("message", "上传成功");
-		map.put("fileName", newFileName);
 		return map;
 	}
 	

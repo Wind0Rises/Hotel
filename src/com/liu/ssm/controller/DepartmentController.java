@@ -12,6 +12,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,9 @@ public class DepartmentController {
 
 	@Autowired
 	private DepartmentService departmentService;
+	
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
 
 	@RequestMapping("list")
 	public ModelAndView list(){
@@ -80,7 +84,7 @@ public class DepartmentController {
 	 * @description 删除数据
 	 * @data 2017-7-20 下午7:52:47
 	 * @param id
-	 * @return
+	 * @return	
 	 */
 	@RequestMapping("delete")
 	@ResponseBody
@@ -176,9 +180,34 @@ public class DepartmentController {
 		if (id != null) {
 			mv.addObject("department",departmentService.getById(id));
 		}
+		
+		String redString =  (String) redisTemplate.opsForHash().get("FF", "FF");
+		
+		logger.debug("++++++++++++++++++++++++++++++++++++++++++++++++"  + redString + "+++++++++++++++++++++++++++++++++++++++++++++++++");
+		
+		//String zhangsan = redisTemplate.ge
+		
+		System.out.println();
+		
+		System.out.println("==========================================" + redisTemplate.opsForValue().get("liuweianw") + "===========================================");
+		
 		return mv;
 	}
 	
+	/**
+	 * 
+	 * @author LWA
+	 * @Descrition 跳转到部门员工信息页面
+	 * @date 2017-8-4 上午11:33:08
+	 * @return
+	 */
+	@RequestMapping("showPeople")
+	public ModelAndView showPeople(@RequestParam("departmentNo")String departmentNo){
+		
+		ModelAndView mv = new ModelAndView("employee/list");
+		mv.addObject("departmentNo", departmentNo);
+		return mv;
+	}
 	
 	
 	

@@ -6,6 +6,10 @@ public class Employee {
 	
 	public String employeeName;
 	
+	public String phone;
+	
+	public String email;
+	
 	public int age;
 	
 	//入职时间
@@ -117,5 +121,21 @@ public class Employee {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

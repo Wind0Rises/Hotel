@@ -45,6 +45,7 @@
 					   			<td>姓名</td>
 					   			<td>年龄</td>
 					   			<td>入职时间</td>
+					   			<td>手机号码</td>
 					   			<td>月薪</td>
 					   			<td>部门</td>
 					   			<td>职位</td>
@@ -142,6 +143,7 @@
 						"<td>" + listsData[i].employeeName +"</td>" +
 						"<td>" + listsData[i].age +"</td>" +
 						"<td>" + listsData[i].date +"</td>" +
+						"<td>" + listsData[i].phone +"</td>" +
 						"<td>" + listsData[i].salary +"</td>" +
 						"<td>" + listsData[i].departmentNo +"</td>" +
 						"<td>" + listsData[i].postNo +"</td>";

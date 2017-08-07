@@ -30,10 +30,6 @@
 				    	<label >部门名称：</label>
 				    	<input type="text" id="departmentName" name="departmentName" class="form-control"  placeholder="部门名称">
 				  	</div>
-				  	<!-- <div class="form-group" id="second">
-				    	<label >身份证：</label>
-				    	<input type="text" id="IDCard" name="IDCard" class="form-control"  placeholder="入住">
-				  	</div> -->
 				  	<button onclick="search()" type="button" class="btn btn-default">搜索</button>
 				  	<button id="addBut" onclick="javascript:window.location.href='<%=basePath %>department/add'" type="button" class="btn btn-default" >添加</button>
 				</div>
@@ -144,6 +140,7 @@
 						"<td><a style='margin-left: 20px;text-decoration: none' onclick=edit('<%=basePath%>department/edit?id=" + listsData[i].departmentNo + "') >编辑</a>" + 
 							"<a style='margin-left: 20px;text-decoration: none' onclick=deleteM('<%=basePath%>department/delete?id=" + listsData[i].departmentNo + "') >删除</a>" +
 							"<a style='margin-left: 20px;text-decoration: none' onclick=show('<%=basePath%>department/show?id=" + listsData[i].departmentNo + "') >查看</a>" +
+							"<a style='margin-left: 20px;text-decoration: none' onclick=showPeople('<%=basePath%>department/showPeople?departmentNo=" + listsData[i].departmentNo + "') >人员</a>" +
 						"</td>" +
 					"</tr>";
 		   		};
@@ -166,6 +163,13 @@
 		   		跳转到查看页面
 		   	*/
 		   	var show = function(url){
+		   		location.href= url;
+		   	};
+		   	
+		   	/**
+		   		查看部门人员信息
+		   	*/
+		   	var showPeople = function(url){
 		   		location.href= url;
 		   	};
 		   	
@@ -200,8 +204,6 @@
 		   			//取消操作
 		   		});
 		   	};
-		   	
-		   	
 		   	
 		</script>
 	</body>

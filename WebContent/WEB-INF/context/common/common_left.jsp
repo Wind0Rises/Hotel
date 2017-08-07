@@ -8,12 +8,11 @@
 <div class="list">  
     <ul class="first">  
        <li>
-        	<a href="#" class="inactive active">美协章程</a>
+        	<a href="#" class="inactive active">系统管理</a>
         	<ul>  
-                <li><a class="content" href="<%=basePath %>student/list" >学生管理</a></li>  
-                <li><a class="content" href="#">艺委会工作部</a></li>  
-                <li><a class="content" href="#">信息资源部</a></li>  
-                <li><a class="content" href="#">双年展办公室</a></li>  
+                <li><a class="content" href="<%=basePath %>student/list" >人员管理</a></li>  
+                <li><a class="content" href="#">角色管理</a></li>  
+                <li><a class="content" href="#">权限管理</a></li>  
             </ul>  
        </li>  
         
@@ -22,11 +21,7 @@
             <ul>  
                 <li><a class="content" href="<%=basePath %>department/list">部门管理</a></li>  
                 <li><a class="content" href="<%=basePath %>employee/list">人员管理</a></li>  
-                <li><a class="content" href="#">展览部</a></li>  
-                <li><a class="content" href="#">艺委会工作部</a></li>  
-                <li><a class="content" href="#">信息资源部</a></li>  
-                <li><a class="content" href="#">双年展办公室</a></li> 
-                <li><a class="content" href="#">展览部</a></li>  
+                <li><a class="content" href="<%=basePath %>post/list">岗位管理</a></li>  
                 <li><a class="content" href="#">艺委会工作部</a></li>  
                 <li><a class="content" href="#">信息资源部</a></li>  
                 <li><a class="content" href="#">双年展办公室</a></li>  
@@ -34,7 +29,7 @@
         </li>  
 
         <li>
-        	<a href="#" class="inactive">组织机构</a>  
+        	<a href="#" class="inactive">订单处理</a>  
             <ul>  
                 <li><a class="content" href="#">办公室</a></li>  
                 <li><a class="content" href="#">人事处</a></li>  

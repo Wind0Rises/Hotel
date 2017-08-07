@@ -5,8 +5,8 @@
 		
 	<mapper namespace = "com.liu.ssm.mapper.EmployeeMapper">
 		<insert id="add" parameterType="employee" >
-			INSERT INTO `hotal_mana_emp`(id,employeeName,age,`date`,images,`status`,salary,reward,departmentNo,postNo,description)
-			VALUES(#{id},#{employeeName},#{age},#{date},#{images},#{status},#{salary},#{reward},#{departmentNo},#{postNo},#{description})
+			INSERT INTO `hotal_mana_emp`(id,employeeName,age,`date`,images,`status`,salary,reward,departmentNo,postNo,description,phone,email)
+			VALUES(#{id},#{employeeName},#{age},#{date},#{images},#{status},#{salary},#{reward},#{departmentNo},#{postNo},#{description},#{phone},#{email})
 		</insert>
 		
 		<delete id="delete" parameterType="string">
@@ -14,7 +14,7 @@
 		</delete>
 		
 		<update id="update" parameterType="employee">
-			update `hotal_mana_emp` set employeeName = #{employeeName},age = #{age},date = #{date},images = #{images},
+			update `hotal_mana_emp` set employeeName = #{employeeName},age = #{age},date = #{date},images = #{images},phone = #{phone},email = #{email},
 			status = #{status},salary = #{salary},reward = #{reward},departmentNo = #{departmentNo},postNo = #{postNo},description = #{description}
 			where id = #{id}
 		</update>

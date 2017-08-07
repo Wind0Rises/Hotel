@@ -43,7 +43,21 @@
 				  	<div class="form-group">
 				    	<label for="age" class="col-sm-2 control-label">年龄：</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="age" id="age" value="${employee.age }" placeholder="请填写雇员年龄">
+					      <input pattern="^([0-9]|[1-9][0-9]|1[0-3][0-9])$" title="输入有误" type="text" class="form-control" name="age" id="age" value="${employee.age }" placeholder="请填写雇员年龄">
+					    </div>
+					</div>
+					
+					<div class="form-group">
+				    	<label for="phone" class="col-sm-2 control-label">手机号：</label>
+					    <div class="col-sm-10">
+					      <input pattern="^1[34578]\d{9}$" title="输入有误" type="text" class="form-control" name="phone" id="phone" value="${employee.phone }" placeholder="请填写手机号码">
+					    </div>
+					</div>
+					
+					<div class="form-group">
+				    	<label for="email" class="col-sm-2 control-label">电子邮件：</label>
+					    <div class="col-sm-10">
+					      <input pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" title="输入有误" type="text" class="form-control" name="email" id="email" value="${employee.email }" placeholder="请填写电子邮件">
 					    </div>
 					</div>
 					
@@ -56,14 +70,14 @@
 					<div class="form-group">
 				    	<label for="salary" class="col-sm-2 control-label">薪资：</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="salary" id="salary" value="${employee.salary }" placeholder="请填写薪资">
+					      <input type="text" pattern="^\d+(\.\d+)?$" title="请输入正确的格式" class="form-control" name="salary" id="salary" value="${employee.salary }" placeholder="请填写薪资">
 					    </div>
 					</div>
 					
 					<div class="form-group">
 				    	<label for="reward" class="col-sm-2 control-label">奖金：</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" name="reward" id="reward" value="${employee.reward }" placeholder="请填写奖金">
+					      <input type="text" pattern="^\d+(\.\d+)?$" title="请输入正确的格式"	 class="form-control" name="reward" id="reward" value="${employee.reward }" placeholder="请填写奖金">
 					    </div>
 					</div>
 					<div class="form-group" id="imageContainer">
@@ -86,6 +100,36 @@
 				    	<label for="departmentNo" class="col-sm-2 control-label">部门：</label>
 					    <div class="col-sm-10">
 					      <input type="text" class="form-control" name="departmentNo" id="departmentNo" value="${employee.departmentNo }" placeholder="请填写职位">
+					    </div>
+					</div>
+					
+					<div class="form-group">
+				    	<label for="status" class="col-sm-2 control-label">状态：</label>
+					    <div class="col-sm-10">
+						    <c:choose>
+						    	<c:when test="${employee.status != null }">
+						    		<label class="radio-inline">
+								      <input type="radio" name="status" id="status1" value="1" <c:if test="${employee.status == 1 }">checked</c:if> >在职
+								    </label>
+								    <label class="checkbox-inline">
+								      <input type="radio" name="status" id="status2" value="0" <c:if test="${employee.status == 0 }">checked</c:if> >离职
+								   	</label>
+								    <label class="checkbox-inline">
+								      <input type="radio" name="status" id="status3" value="2" <c:if test="${employee.status == 2 }">checked</c:if> >休假
+								    </label>
+						    	</c:when>
+						    	<c:otherwise>
+						    		<label class="radio-inline">
+								      <input type="radio" name="status" id="status1" value="1" checked >在职
+								    </label>
+								    <label class="checkbox-inline">
+								      <input type="radio" name="status" id="status2" value="0" >离职
+								   	</label>
+								    <label class="checkbox-inline">
+								      <input type="radio" name="status" id="status3" value="2" >休假
+								    </label>
+						    	</c:otherwise>
+						    </c:choose>
 					    </div>
 					</div>
 					
@@ -133,21 +177,35 @@
 		    
 		    //提交修改
 		    $("#form_edit").submit(function(){
+		    	console.log("submit");
 		    	$.ajax({
 		    		url:"<%=basePath %>employee/save",
 		    		data: $("#form_edit").serialize(),
 		    		type: 'post',
-		    		async: false,
 		    		success: function(data){
-		    			layer.confirm(data.message,{
-		    				btn:['确定','取消']
-		    			},function(index){
-		    				location.href="<%=basePath %>employee/list";
-		    			},function(){
-		    				location.reload();
-		    			});
+		    			console.log("进入成功");
+		    			if(data.message == null || data.message == ""){
+		    				layer.confirm("操作失败！确定返回列表页面，取消留在编辑页面！",{
+			    				btn:['确定','取消']
+			    			},function(index){
+			    				location.href="<%=basePath %>employee/list";
+			    			},function(){
+			    				location.reload();
+			    			});
+		    			}else{
+		    				layer.confirm(data.message,{
+			    				btn:['确定','取消']
+			    			},function(index){
+			    				location.href="<%=basePath %>employee/list";
+			    			},function(){
+			    				location.reload();
+			    			});
+		    			}
+	    				
+		    			
 		    		},
 		    		error: function(){
+		    			console.log("进入失败");
 		    			layer.msg("保存错误！");
 		    		}
 		    	});

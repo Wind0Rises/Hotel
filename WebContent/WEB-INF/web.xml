@@ -7,7 +7,8 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>
     	classpath:spring/spring-bean.xml,
-    	classpath:shiro/shiro-config.xml
+    	classpath:shiro/shiro-config.xml,
+    	classpath:redis/spring-redis.xml
     </param-value>
   </context-param>
   <listener>
