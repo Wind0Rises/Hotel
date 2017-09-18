@@ -2,6 +2,7 @@ package com.liu.ssm.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +34,15 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+	
+	/*@Autowired
+	private RabbitTemplate rabbitTemplate;*/
 
 	@RequestMapping("list")
 	public ModelAndView list(){
+		
+		//rabbitTemplate.convertAndSend("employee.add", "This is employee.add!");
+		
 		return new ModelAndView("employee/list");
 	}
 	
@@ -278,13 +286,48 @@ public class EmployeeController {
 		return map;
 	}
 	
+	/**
+	 * 
+	 * @author LWA
+	 * @Descrition 到人员分布的图标页面
+	 * @date 2017-8-9 上午10:30:47
+	 * @return
+	 */
+	@RequestMapping("distribute")
+	public ModelAndView distribute(){
+		return new ModelAndView("employee/distribute");
+	}
 	
+	/**
+	 * 
+	 * @author LWA echart 图标
+	 * @Descrition
+	 * @date 2017-8-11 上午9:22:59
+	 * @return
+	 */
+	@RequestMapping("distributeInit")
+	@ResponseBody
+	public JSONObject distributeInit(){
+		System.out.println("jiandf");
+		List<Map<String, Integer>> map = employeeService.distributed();
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("data", map);
+		return jsonObject;
+	}
 	
-	
-	
-	
-	
-	
+	/**
+	 * 
+	 * @author LWA
+	 * @Descrition 邮件发送页面
+	 * @date 2017-8-11 上午9:17:45
+	 * @return
+	 */
+	@RequestMapping("sendMail")
+	public ModelAndView sendMail(@RequestParam("email")String email){
+		ModelAndView mv = new ModelAndView("employee/sendMail");
+		mv.addObject("email",email);
+		return mv;
+	}
 	
 	
 }

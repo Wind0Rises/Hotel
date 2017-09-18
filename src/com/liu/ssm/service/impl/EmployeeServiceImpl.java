@@ -51,5 +51,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return employeeMapper.totalNumber(map);
 	}
 
+	@Override
+	public List<Map<String, Integer>> distributed() {
+		return employeeMapper.distributed();
+	}
 
 }

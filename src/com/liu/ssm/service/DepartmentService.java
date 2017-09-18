@@ -12,4 +12,8 @@ public interface DepartmentService extends SysService<Department>{
 	List<Department> getPage(String departmentName,int pageNo,int pageSize);
 	
 	List<Department> getDepartmentByName(String departmentName);
+	
+	int insertList(List<Department> list);
+	
+	int deleteList(String[] array);
 }

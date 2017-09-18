@@ -51,4 +51,11 @@
 			</if>
 			limit ${startNo},${pageSize}
 		</select>
+		
+		<select id="distributed"  resultType="java.util.Map" >
+			SELECT departmentNo,COUNT(id) AS peopleNumber FROM `hotal_mana_emp` GROUP BY departmentNo
+		</select>
+		
+		
+		
 	</mapper>

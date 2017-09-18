@@ -41,7 +41,7 @@ public class CustomExceptionResolver implements HandlerExceptionResolver{
 			request.getRequestDispatcher("/WEB-INF/context/error.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
-		} ;
+		};
 		
 		return new ModelAndView();
 	}

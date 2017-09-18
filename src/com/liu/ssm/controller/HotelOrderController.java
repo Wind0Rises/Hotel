@@ -129,7 +129,7 @@ public class HotelOrderController {
 		
 		if (request.getParameter("id") == null) {
 			//this is add order
-			order.setDate(DateUtil.DateToString(new Date(),DateUtil.dateAll));
+			order.setDate(DateUtil.DateToString(new Date(),DateUtil.DATE_ALL));
 			order.setOrderName(orderName);
 			order.setIDCard(IDCard);
 			order.setPhone(phone);

@@ -11,5 +11,4 @@ public interface SysUserService {
 	void deleteSysUserById(String id) throws Exception;
 	
 	void updateSysUserById(SysUser sysUser) throws Exception;
-	
 }

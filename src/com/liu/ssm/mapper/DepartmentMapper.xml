@@ -5,13 +5,44 @@
 		
 	<mapper namespace = "com.liu.ssm.mapper.DepartmentMapper">
 		<insert id="add" parameterType="department" >
-			INSERT INTO `hotel_mana_depa`(departmentNo,departmentName,SupervisorNo,departmentNumber,description,higherOfficeNo,phone,email)
+			INSERT INTO `hotel_mana_depa`(departmentNo,departmentName,SupervisorNo,departmentNumber,description,higherOfficeNo)
 			VALUE(#{departmentNo},#{departmentName},#{SupervisorNo},#{departmentNumber},#{description},#{higherOfficeNo}) 
+		</insert>
+		
+		<!-- useGeneratedKeys="true" keyProperty="departmentNo" -->
+		<!-- <insert id="addBackPrimaryKey" parameterType="department" >
+			<selectKey resultType="string" order="BEFORE" keyProperty="departmentNo" >
+				select UUID()
+			</selectKey>
+			INSERT INTO `hotel_mana_depa`(departmentNo,departmentName,SupervisorNo,departmentNumber,description,higherOfficeNo)
+			VALUE(#{departmentNo},#{departmentName},#{SupervisorNo},#{departmentNumber},#{description},#{higherOfficeNo}) 
+		</insert> -->
+		
+		<insert id="insertList" parameterType="list"  >
+			INSERT INTO `hotel_mana_depa`(departmentNo,departmentName,SupervisorNo,
+			departmentNumber,description,higherOfficeNo)
+			VALUES
+			<foreach collection="list" item="item" index="index" separator="," >
+				(#{item.departmentNo,jdbcType=VARCHAR},
+				 #{item.departmentName,jdbcType=VARCHAR},
+				 #{item.SupervisorNo,jdbcType=VARCHAR},
+				 #{item.departmentNumber,jdbcType=INTEGER},
+				 #{item.description,jdbcType=VARCHAR},
+				 #{item.higherOfficeNo,jdbcType=VARCHAR})
+			</foreach>
 		</insert>
 		
 		<delete id="delete" parameterType="string">
 			DELETE FROM `hotel_mana_depa` WHERE departmentNo=#{id}
 		</delete>
+		<delete id="deleteList" parameterType="string">
+			DELETE FROM `hotel_mana_depa` WHERE departmentNo in
+			<foreach collection="array" item="item"  open="(" close=")" index="index" separator="," >
+				#{item}
+			</foreach>
+		</delete>
+		
+		
 		
 		<update id="update" parameterType="department">
 			UPDATE `hotel_mana_depa` SET departmentName=#{departmentName},SupervisorNo=#{SupervisorNo},departmentNumber = #{departmentNumber},

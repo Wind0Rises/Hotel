@@ -308,7 +308,6 @@
 		    			layer.msg("上传失败");
 		    		}
 		    	});
-		    	
 		    };
 		</script>
 	</body>

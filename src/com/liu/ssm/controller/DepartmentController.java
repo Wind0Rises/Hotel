@@ -11,32 +11,49 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liu.other.util.GenerateKeyUtil;
 import com.liu.ssm.pojo.Department;
 import com.liu.ssm.service.DepartmentService;
 
-@Controller
+@Controller("departmentController")
 @RequestMapping("/department/")
 public class DepartmentController {
 	
 	Logger logger = Logger.getLogger(DepartmentController.class);
 
+	
+	//@Autowired
+	//private RabbitTemplate rabbitTemplate;
+	
+	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+	
+	/*@Autowired
+	private RedisTemplate<String, String> redisTemplate;*/
 	@Autowired
 	private DepartmentService departmentService;
-	
-	@Autowired
-	private RedisTemplate<String, String> redisTemplate;
 
 	@RequestMapping("list")
 	public ModelAndView list(){
+		//rabbitMQ 生产者
+		//Map<String, String> map = new HashMap<String, String>();
+		//map.put("message", "This is department.list");
+		/*try {
+			rabbitTemplate.convertAndSend("department.list", OBJECT_MAPPER.writeValueAsString(map));
+			rabbitTemplate.convertAndSend("department.list", "my name is liuweian");
+		}  catch (Exception e) {
+			e.printStackTrace();
+		}*/
 		return new ModelAndView("department/list");
 	}
 	
@@ -176,21 +193,16 @@ public class DepartmentController {
 	 */
 	@RequestMapping("show")
 	public ModelAndView show(@RequestParam("id") String id){
-		ModelAndView mv = new ModelAndView("department/show");
+		ModelAndView mv = new ModelAndView("employee/list");
 		if (id != null) {
-			mv.addObject("department",departmentService.getById(id));
+			mv.addObject("departmentNo",departmentService.getById(id).getDepartmentNo());
 		}
 		
-		String redString =  (String) redisTemplate.opsForHash().get("FF", "FF");
-		
+		/*
+		 * String redString =  (String) redisTemplate.opsForHash().get("FF", "FF");
 		logger.debug("++++++++++++++++++++++++++++++++++++++++++++++++"  + redString + "+++++++++++++++++++++++++++++++++++++++++++++++++");
-		
-		//String zhangsan = redisTemplate.ge
-		
-		System.out.println();
-		
 		System.out.println("==========================================" + redisTemplate.opsForValue().get("liuweianw") + "===========================================");
-		
+		*/
 		return mv;
 	}
 	
@@ -203,23 +215,9 @@ public class DepartmentController {
 	 */
 	@RequestMapping("showPeople")
 	public ModelAndView showPeople(@RequestParam("departmentNo")String departmentNo){
-		
 		ModelAndView mv = new ModelAndView("employee/list");
 		mv.addObject("departmentNo", departmentNo);
 		return mv;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

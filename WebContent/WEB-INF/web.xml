@@ -8,7 +8,8 @@
     <param-value>
     	classpath:spring/spring-bean.xml,
     	classpath:shiro/shiro-config.xml,
-    	classpath:redis/spring-redis.xml
+    	classpath:redis/spring-redis.xml,
+    	classpath:spring/spring-rabbit.xml
     </param-value>
   </context-param>
   <listener>

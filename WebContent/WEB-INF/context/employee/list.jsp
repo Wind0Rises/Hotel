@@ -34,8 +34,10 @@
 				    	<label >入职时间：</label>
 				    	<input type="text" id="date" name="date" class="form-control"  placeholder="入职时间">
 				  	</div>
+				  		<input type="text" id="departmentNo" name="departmentNo" class="form-control" value="${departmentNo }" > 
 				  	<button onclick="search()" type="button" class="btn btn-default">搜索</button>
 				  	<button id="addBut" onclick="javascript:window.location.href='<%=basePath %>employee/add'" type="button" class="btn btn-default" >添加</button>
+				  	<button id="addBut" onclick="javascript:window.location.href='<%=basePath %>employee/distribute'" type="button" class="btn btn-default" >分布</button>
 				</div>
 				<div class="table-responsive" id="mainBoby">
 				  	<table class="table">
@@ -161,6 +163,7 @@
 						"<td><a style='margin-left: 20px;text-decoration: none' onclick=edit('<%=basePath%>employee/edit?id=" + listsData[i].id + "') >编辑</a>" + 
 							"<a style='margin-left: 20px;text-decoration: none' onclick=deleteM('<%=basePath%>employee/delete?id=" + listsData[i].id + "') >删除</a>" +
 							"<a style='margin-left: 20px;text-decoration: none' onclick=show('<%=basePath%>employee/show?id=" + listsData[i].id + "') >查看</a>" +
+							"<a style='margin-left: 20px;text-decoration: none' onclick=sendMail('<%=basePath%>employee/sendMail?email=" + listsData[i].email + "') >发送邮件</a>" +
 						"</td>" +
 					"</tr>";
 		   		};
@@ -184,6 +187,13 @@
 		   	*/
 		   	var show = function(url){
 		   		location.href= url;
+		   	};
+		   	
+		   	/**
+		   		发送邮件
+		   	*/
+		   	var sendMail = function(url){
+		   		location.href=url;
 		   	};
 		   	
 		   	/**

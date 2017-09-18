@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.ssm.mapper.CinemaBoxOfficeMapper" >
+  <resultMap id="BaseResultMap" type="com.liu.ssm.pojo.CinemaBoxOffice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="rank_num" property="rankNum" jdbcType="INTEGER" />
+    <result column="cinema_name" property="cinemaName" jdbcType="VARCHAR" />
+    <result column="today_box" property="todayBox" jdbcType="DOUBLE" />
+    <result column="today_show_count" property="todayShowCount" jdbcType="INTEGER" />
+    <result column="today_audience_count" property="todayAudienceCount" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="avg_people" property="avgPeople" jdbcType="DOUBLE" />
+    <result column="attendance" property="attendance" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, rank_num, cinema_name, today_box, today_show_count, today_audience_count, price, 
+    avg_people, attendance
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.liu.ssm.pojo.CinemaBoxOfficeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cinema_box_office
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cinema_box_office
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cinema_box_office
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.liu.ssm.pojo.CinemaBoxOfficeExample" >
+    delete from cinema_box_office
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.liu.ssm.pojo.CinemaBoxOffice" >
+    insert into cinema_box_office (id, rank_num, cinema_name, 
+      today_box, today_show_count, today_audience_count, 
+      price, avg_people, attendance
+      )
+    values (#{id,jdbcType=INTEGER}, #{rankNum,jdbcType=INTEGER}, #{cinemaName,jdbcType=VARCHAR}, 
+      #{todayBox,jdbcType=DOUBLE}, #{todayShowCount,jdbcType=INTEGER}, #{todayAudienceCount,jdbcType=INTEGER}, 
+      #{price,jdbcType=DOUBLE}, #{avgPeople,jdbcType=DOUBLE}, #{attendance,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.liu.ssm.pojo.CinemaBoxOffice" >
+    insert into cinema_box_office
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rankNum != null" >
+        rank_num,
+      </if>
+      <if test="cinemaName != null" >
+        cinema_name,
+      </if>
+      <if test="todayBox != null" >
+        today_box,
+      </if>
+      <if test="todayShowCount != null" >
+        today_show_count,
+      </if>
+      <if test="todayAudienceCount != null" >
+        today_audience_count,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="avgPeople != null" >
+        avg_people,
+      </if>
+      <if test="attendance != null" >
+        attendance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rankNum != null" >
+        #{rankNum,jdbcType=INTEGER},
+      </if>
+      <if test="cinemaName != null" >
+        #{cinemaName,jdbcType=VARCHAR},
+      </if>
+      <if test="todayBox != null" >
+        #{todayBox,jdbcType=DOUBLE},
+      </if>
+      <if test="todayShowCount != null" >
+        #{todayShowCount,jdbcType=INTEGER},
+      </if>
+      <if test="todayAudienceCount != null" >
+        #{todayAudienceCount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="avgPeople != null" >
+        #{avgPeople,jdbcType=DOUBLE},
+      </if>
+      <if test="attendance != null" >
+        #{attendance,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.liu.ssm.pojo.CinemaBoxOfficeExample" resultType="java.lang.Integer" >
+    select count(*) from cinema_box_office
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cinema_box_office
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.rankNum != null" >
+        rank_num = #{record.rankNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.cinemaName != null" >
+        cinema_name = #{record.cinemaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todayBox != null" >
+        today_box = #{record.todayBox,jdbcType=DOUBLE},
+      </if>
+      <if test="record.todayShowCount != null" >
+        today_show_count = #{record.todayShowCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.todayAudienceCount != null" >
+        today_audience_count = #{record.todayAudienceCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.avgPeople != null" >
+        avg_people = #{record.avgPeople,jdbcType=DOUBLE},
+      </if>
+      <if test="record.attendance != null" >
+        attendance = #{record.attendance,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cinema_box_office
+    set id = #{record.id,jdbcType=INTEGER},
+      rank_num = #{record.rankNum,jdbcType=INTEGER},
+      cinema_name = #{record.cinemaName,jdbcType=VARCHAR},
+      today_box = #{record.todayBox,jdbcType=DOUBLE},
+      today_show_count = #{record.todayShowCount,jdbcType=INTEGER},
+      today_audience_count = #{record.todayAudienceCount,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DOUBLE},
+      avg_people = #{record.avgPeople,jdbcType=DOUBLE},
+      attendance = #{record.attendance,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.liu.ssm.pojo.CinemaBoxOffice" >
+    update cinema_box_office
+    <set >
+      <if test="rankNum != null" >
+        rank_num = #{rankNum,jdbcType=INTEGER},
+      </if>
+      <if test="cinemaName != null" >
+        cinema_name = #{cinemaName,jdbcType=VARCHAR},
+      </if>
+      <if test="todayBox != null" >
+        today_box = #{todayBox,jdbcType=DOUBLE},
+      </if>
+      <if test="todayShowCount != null" >
+        today_show_count = #{todayShowCount,jdbcType=INTEGER},
+      </if>
+      <if test="todayAudienceCount != null" >
+        today_audience_count = #{todayAudienceCount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="avgPeople != null" >
+        avg_people = #{avgPeople,jdbcType=DOUBLE},
+      </if>
+      <if test="attendance != null" >
+        attendance = #{attendance,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.liu.ssm.pojo.CinemaBoxOffice" >
+    update cinema_box_office
+    set rank_num = #{rankNum,jdbcType=INTEGER},
+      cinema_name = #{cinemaName,jdbcType=VARCHAR},
+      today_box = #{todayBox,jdbcType=DOUBLE},
+      today_show_count = #{todayShowCount,jdbcType=INTEGER},
+      today_audience_count = #{todayAudienceCount,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      avg_people = #{avgPeople,jdbcType=DOUBLE},
+      attendance = #{attendance,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.ssm.mapper.MainlandBoxOfficeMapper" >
+  <resultMap id="BaseResultMap" type="com.liu.ssm.pojo.MainlandBoxOffice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="movie_name" property="movieName" jdbcType="VARCHAR" />
+    <result column="genre_main" property="genreMain" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="box_office" property="boxOffice" jdbcType="INTEGER" />
+    <result column="show_count" property="showCount" jdbcType="INTEGER" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="audience_count" property="audienceCount" jdbcType="INTEGER" />
+    <result column="avg_price" property="avgPrice" jdbcType="INTEGER" />
+    <result column="release_time" property="releaseTime" jdbcType="VARCHAR" />
+    <result column="avg_people" property="avgPeople" jdbcType="INTEGER" />
+    <result column="default_image" property="defaultImage" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, movie_name, genre_main, area, box_office, show_count, type_id, audience_count, 
+    avg_price, release_time, avg_people, default_image
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.liu.ssm.pojo.MainlandBoxOfficeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mainland_box_office
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mainland_box_office
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mainland_box_office
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.liu.ssm.pojo.MainlandBoxOfficeExample" >
+    delete from mainland_box_office
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.liu.ssm.pojo.MainlandBoxOffice" >
+    insert into mainland_box_office (id, movie_name, genre_main, 
+      area, box_office, show_count, 
+      type_id, audience_count, avg_price, 
+      release_time, avg_people, default_image
+      )
+    values (#{id,jdbcType=INTEGER}, #{movieName,jdbcType=VARCHAR}, #{genreMain,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{boxOffice,jdbcType=INTEGER}, #{showCount,jdbcType=INTEGER}, 
+      #{typeId,jdbcType=INTEGER}, #{audienceCount,jdbcType=INTEGER}, #{avgPrice,jdbcType=INTEGER}, 
+      #{releaseTime,jdbcType=VARCHAR}, #{avgPeople,jdbcType=INTEGER}, #{defaultImage,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.liu.ssm.pojo.MainlandBoxOffice" >
+    insert into mainland_box_office
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="movieName != null" >
+        movie_name,
+      </if>
+      <if test="genreMain != null" >
+        genre_main,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="boxOffice != null" >
+        box_office,
+      </if>
+      <if test="showCount != null" >
+        show_count,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="audienceCount != null" >
+        audience_count,
+      </if>
+      <if test="avgPrice != null" >
+        avg_price,
+      </if>
+      <if test="releaseTime != null" >
+        release_time,
+      </if>
+      <if test="avgPeople != null" >
+        avg_people,
+      </if>
+      <if test="defaultImage != null" >
+        default_image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="movieName != null" >
+        #{movieName,jdbcType=VARCHAR},
+      </if>
+      <if test="genreMain != null" >
+        #{genreMain,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="boxOffice != null" >
+        #{boxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="showCount != null" >
+        #{showCount,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="audienceCount != null" >
+        #{audienceCount,jdbcType=INTEGER},
+      </if>
+      <if test="avgPrice != null" >
+        #{avgPrice,jdbcType=INTEGER},
+      </if>
+      <if test="releaseTime != null" >
+        #{releaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="avgPeople != null" >
+        #{avgPeople,jdbcType=INTEGER},
+      </if>
+      <if test="defaultImage != null" >
+        #{defaultImage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.liu.ssm.pojo.MainlandBoxOfficeExample" resultType="java.lang.Integer" >
+    select count(*) from mainland_box_office
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mainland_box_office
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.movieName != null" >
+        movie_name = #{record.movieName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.genreMain != null" >
+        genre_main = #{record.genreMain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boxOffice != null" >
+        box_office = #{record.boxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="record.showCount != null" >
+        show_count = #{record.showCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.typeId != null" >
+        type_id = #{record.typeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.audienceCount != null" >
+        audience_count = #{record.audienceCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.avgPrice != null" >
+        avg_price = #{record.avgPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.releaseTime != null" >
+        release_time = #{record.releaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgPeople != null" >
+        avg_people = #{record.avgPeople,jdbcType=INTEGER},
+      </if>
+      <if test="record.defaultImage != null" >
+        default_image = #{record.defaultImage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mainland_box_office
+    set id = #{record.id,jdbcType=INTEGER},
+      movie_name = #{record.movieName,jdbcType=VARCHAR},
+      genre_main = #{record.genreMain,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      box_office = #{record.boxOffice,jdbcType=INTEGER},
+      show_count = #{record.showCount,jdbcType=INTEGER},
+      type_id = #{record.typeId,jdbcType=INTEGER},
+      audience_count = #{record.audienceCount,jdbcType=INTEGER},
+      avg_price = #{record.avgPrice,jdbcType=INTEGER},
+      release_time = #{record.releaseTime,jdbcType=VARCHAR},
+      avg_people = #{record.avgPeople,jdbcType=INTEGER},
+      default_image = #{record.defaultImage,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.liu.ssm.pojo.MainlandBoxOffice" >
+    update mainland_box_office
+    <set >
+      <if test="movieName != null" >
+        movie_name = #{movieName,jdbcType=VARCHAR},
+      </if>
+      <if test="genreMain != null" >
+        genre_main = #{genreMain,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="boxOffice != null" >
+        box_office = #{boxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="showCount != null" >
+        show_count = #{showCount,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="audienceCount != null" >
+        audience_count = #{audienceCount,jdbcType=INTEGER},
+      </if>
+      <if test="avgPrice != null" >
+        avg_price = #{avgPrice,jdbcType=INTEGER},
+      </if>
+      <if test="releaseTime != null" >
+        release_time = #{releaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="avgPeople != null" >
+        avg_people = #{avgPeople,jdbcType=INTEGER},
+      </if>
+      <if test="defaultImage != null" >
+        default_image = #{defaultImage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.liu.ssm.pojo.MainlandBoxOffice" >
+    update mainland_box_office
+    set movie_name = #{movieName,jdbcType=VARCHAR},
+      genre_main = #{genreMain,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      box_office = #{boxOffice,jdbcType=INTEGER},
+      show_count = #{showCount,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=INTEGER},
+      audience_count = #{audienceCount,jdbcType=INTEGER},
+      avg_price = #{avgPrice,jdbcType=INTEGER},
+      release_time = #{releaseTime,jdbcType=VARCHAR},
+      avg_people = #{avgPeople,jdbcType=INTEGER},
+      default_image = #{defaultImage,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

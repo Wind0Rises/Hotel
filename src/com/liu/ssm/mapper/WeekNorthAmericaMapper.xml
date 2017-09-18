@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.ssm.mapper.WeekNorthAmericaMapper" >
+  <resultMap id="BaseResultMap" type="com.liu.ssm.pojo.WeekNorthAmerica" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+    <result column="last_rank" property="lastRank" jdbcType="INTEGER" />
+    <result column="rank_change" property="rankChange" jdbcType="INTEGER" />
+    <result column="week_num" property="weekNum" jdbcType="INTEGER" />
+    <result column="movie_name" property="movieName" jdbcType="VARCHAR" />
+    <result column="week_end_box_office" property="weekEndBoxOffice" jdbcType="INTEGER" />
+    <result column="box_office" property="boxOffice" jdbcType="INTEGER" />
+    <result column="cinema" property="cinema" jdbcType="INTEGER" />
+    <result column="cinema_box_office" property="cinemaBoxOffice" jdbcType="INTEGER" />
+    <result column="default_image" property="defaultImage" jdbcType="VARCHAR" />
+    <result column="box_office_pro" property="boxOfficePro" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, rank, last_rank, rank_change, week_num, movie_name, week_end_box_office, box_office, 
+    cinema, cinema_box_office, default_image, box_office_pro
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.liu.ssm.pojo.WeekNorthAmericaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from week_north_america
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from week_north_america
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from week_north_america
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.liu.ssm.pojo.WeekNorthAmericaExample" >
+    delete from week_north_america
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.liu.ssm.pojo.WeekNorthAmerica" >
+    insert into week_north_america (id, rank, last_rank, 
+      rank_change, week_num, movie_name, 
+      week_end_box_office, box_office, cinema, 
+      cinema_box_office, default_image, box_office_pro
+      )
+    values (#{id,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{lastRank,jdbcType=INTEGER}, 
+      #{rankChange,jdbcType=INTEGER}, #{weekNum,jdbcType=INTEGER}, #{movieName,jdbcType=VARCHAR}, 
+      #{weekEndBoxOffice,jdbcType=INTEGER}, #{boxOffice,jdbcType=INTEGER}, #{cinema,jdbcType=INTEGER}, 
+      #{cinemaBoxOffice,jdbcType=INTEGER}, #{defaultImage,jdbcType=VARCHAR}, #{boxOfficePro,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.liu.ssm.pojo.WeekNorthAmerica" >
+    insert into week_north_america
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rank != null" >
+        rank,
+      </if>
+      <if test="lastRank != null" >
+        last_rank,
+      </if>
+      <if test="rankChange != null" >
+        rank_change,
+      </if>
+      <if test="weekNum != null" >
+        week_num,
+      </if>
+      <if test="movieName != null" >
+        movie_name,
+      </if>
+      <if test="weekEndBoxOffice != null" >
+        week_end_box_office,
+      </if>
+      <if test="boxOffice != null" >
+        box_office,
+      </if>
+      <if test="cinema != null" >
+        cinema,
+      </if>
+      <if test="cinemaBoxOffice != null" >
+        cinema_box_office,
+      </if>
+      <if test="defaultImage != null" >
+        default_image,
+      </if>
+      <if test="boxOfficePro != null" >
+        box_office_pro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="lastRank != null" >
+        #{lastRank,jdbcType=INTEGER},
+      </if>
+      <if test="rankChange != null" >
+        #{rankChange,jdbcType=INTEGER},
+      </if>
+      <if test="weekNum != null" >
+        #{weekNum,jdbcType=INTEGER},
+      </if>
+      <if test="movieName != null" >
+        #{movieName,jdbcType=VARCHAR},
+      </if>
+      <if test="weekEndBoxOffice != null" >
+        #{weekEndBoxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="boxOffice != null" >
+        #{boxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="cinema != null" >
+        #{cinema,jdbcType=INTEGER},
+      </if>
+      <if test="cinemaBoxOffice != null" >
+        #{cinemaBoxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="defaultImage != null" >
+        #{defaultImage,jdbcType=VARCHAR},
+      </if>
+      <if test="boxOfficePro != null" >
+        #{boxOfficePro,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.liu.ssm.pojo.WeekNorthAmericaExample" resultType="java.lang.Integer" >
+    select count(*) from week_north_america
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update week_north_america
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.rank != null" >
+        rank = #{record.rank,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastRank != null" >
+        last_rank = #{record.lastRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.rankChange != null" >
+        rank_change = #{record.rankChange,jdbcType=INTEGER},
+      </if>
+      <if test="record.weekNum != null" >
+        week_num = #{record.weekNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.movieName != null" >
+        movie_name = #{record.movieName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weekEndBoxOffice != null" >
+        week_end_box_office = #{record.weekEndBoxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="record.boxOffice != null" >
+        box_office = #{record.boxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="record.cinema != null" >
+        cinema = #{record.cinema,jdbcType=INTEGER},
+      </if>
+      <if test="record.cinemaBoxOffice != null" >
+        cinema_box_office = #{record.cinemaBoxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="record.defaultImage != null" >
+        default_image = #{record.defaultImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boxOfficePro != null" >
+        box_office_pro = #{record.boxOfficePro,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update week_north_america
+    set id = #{record.id,jdbcType=INTEGER},
+      rank = #{record.rank,jdbcType=INTEGER},
+      last_rank = #{record.lastRank,jdbcType=INTEGER},
+      rank_change = #{record.rankChange,jdbcType=INTEGER},
+      week_num = #{record.weekNum,jdbcType=INTEGER},
+      movie_name = #{record.movieName,jdbcType=VARCHAR},
+      week_end_box_office = #{record.weekEndBoxOffice,jdbcType=INTEGER},
+      box_office = #{record.boxOffice,jdbcType=INTEGER},
+      cinema = #{record.cinema,jdbcType=INTEGER},
+      cinema_box_office = #{record.cinemaBoxOffice,jdbcType=INTEGER},
+      default_image = #{record.defaultImage,jdbcType=VARCHAR},
+      box_office_pro = #{record.boxOfficePro,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.liu.ssm.pojo.WeekNorthAmerica" >
+    update week_north_america
+    <set >
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="lastRank != null" >
+        last_rank = #{lastRank,jdbcType=INTEGER},
+      </if>
+      <if test="rankChange != null" >
+        rank_change = #{rankChange,jdbcType=INTEGER},
+      </if>
+      <if test="weekNum != null" >
+        week_num = #{weekNum,jdbcType=INTEGER},
+      </if>
+      <if test="movieName != null" >
+        movie_name = #{movieName,jdbcType=VARCHAR},
+      </if>
+      <if test="weekEndBoxOffice != null" >
+        week_end_box_office = #{weekEndBoxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="boxOffice != null" >
+        box_office = #{boxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="cinema != null" >
+        cinema = #{cinema,jdbcType=INTEGER},
+      </if>
+      <if test="cinemaBoxOffice != null" >
+        cinema_box_office = #{cinemaBoxOffice,jdbcType=INTEGER},
+      </if>
+      <if test="defaultImage != null" >
+        default_image = #{defaultImage,jdbcType=VARCHAR},
+      </if>
+      <if test="boxOfficePro != null" >
+        box_office_pro = #{boxOfficePro,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.liu.ssm.pojo.WeekNorthAmerica" >
+    update week_north_america
+    set rank = #{rank,jdbcType=INTEGER},
+      last_rank = #{lastRank,jdbcType=INTEGER},
+      rank_change = #{rankChange,jdbcType=INTEGER},
+      week_num = #{weekNum,jdbcType=INTEGER},
+      movie_name = #{movieName,jdbcType=VARCHAR},
+      week_end_box_office = #{weekEndBoxOffice,jdbcType=INTEGER},
+      box_office = #{boxOffice,jdbcType=INTEGER},
+      cinema = #{cinema,jdbcType=INTEGER},
+      cinema_box_office = #{cinemaBoxOffice,jdbcType=INTEGER},
+      default_image = #{defaultImage,jdbcType=VARCHAR},
+      box_office_pro = #{boxOfficePro,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

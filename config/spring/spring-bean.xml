@@ -3,12 +3,14 @@
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xmlns:tx="http://www.springframework.org/schema/tx"
      xmlns:aop="http://www.springframework.org/schema/aop"
+     xmlns:rabbit="http://www.springframework.org/schema/rabbit"
      xmlns:context="http://www.springframework.org/schema/context"
      xmlns:mvc="http://www.springframework.org/schema/mvc"
      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+     http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.7.xsd
      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
         
         <context:annotation-config></context:annotation-config>
@@ -34,7 +36,7 @@
         -->
 		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		
-			<!-- 如果要少扫描多个包，需要用逗号隔开，不能用通配符 -->
+			<!-- 如果要扫描多个包，需要用逗号隔开，不能用通配符 -->
 			<property name="basePackage" value="com.liu.ssm.mapper"></property>
 			<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 		</bean>  
@@ -64,6 +66,65 @@
 			<aop:pointcut expression="execution(* com.liu.ssm.service.*.*(*))" id="pointcut"/>
 			<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
 		</aop:config>
-		
-		
+
+
+	<!-- <context:property-placeholder location="classpath:rabbit.properties" ignore-unresolvable="true" />
+    
+    连接配置
+    <rabbit:connection-factory id="connectionFactory" host="localhost" port="5672" 
+    		username="admin" password="admin" virtual-host="/Hotel" />
+    		
+	MQ的管理，包括队列、交换机等
+	<rabbit:admin id="first" connection-factory="connectionFactory" />
+	
+	定义交换机
+	<rabbit:topic-exchange name="HOTEL_FIRST_EXCHANGE" auto-declare="true" durable="true" >
+		<rabbit:bindings>
+			<rabbit:binding queue="FIRST_QUEUE" pattern="department.list"></rabbit:binding>
+			<rabbit:binding queue="THREE_QUEUE" pattern="employee.add"></rabbit:binding>
+		</rabbit:bindings>
+	</rabbit:topic-exchange>
+	
+	定义模板
+	<rabbit:template id="springTemplate" connection-factory="connectionFactory" exchange="HOTEL_FIRST_EXCHANGE" />
+	
+	####### 生产者定义结束，消费者开始 ######
+	连接配置
+    <rabbit:connection-factory id="connectionFactoryCumster" host="localhost" port="5672" 
+    		username="admin" password="admin" virtual-host="/Hotel"  />
+    		
+	MQ的管理，包括队列、交换机等
+	<rabbit:admin id="second" connection-factory="connectionFactoryCumster"  />
+	
+	定义交换机
+	<rabbit:topic-exchange name="HOTEL_FIRST_EXCHANGE" auto-declare="true" durable="true" />
+	
+	定义队列
+	<rabbit:queue name="FIRST_QUEUE" auto-declare="true" durable="true" declared-by="second"  />
+	
+	绑定到交换机，即监听
+	<rabbit:listener-container connection-factory="connectionFactoryCumster" >
+		<rabbit:listener ref="recv1" method="onMessage" queue-names="FIRST_QUEUE"   />
+	</rabbit:listener-container>
+	
+	<bean id="recv1" class="com.liu.other.rabbit.Recv1"></bean> -->
+	
+	<!-- ####### 生产者定义结束，消费者开始 ###### -->
+	<!-- 连接配置 -->
+   <!--  <rabbit:connection-factory id="connectionFactoryCumster2" host="localhost" port="5672" 
+    		username="admin" password="admin" virtual-host="/Hotel"  />
+    		
+	MQ的管理，包括队列、交换机等
+	<rabbit:admin id="three" connection-factory="connectionFactoryCumster2"  />
+	
+	定义队列
+	<rabbit:queue name="THREE_QUEUE" auto-declare="true" durable="true" declared-by="three"  />
+	
+	绑定到交换机，即监听
+	<rabbit:listener-container connection-factory="connectionFactoryCumster2" >
+		<rabbit:listener ref="recv2" method="onMessage" queue-names="THREE_QUEUE"   />
+	</rabbit:listener-container> -->
+	
+	<!-- <bean id="recv2" class="com.liu.other.rabbit.Recv2"></bean> -->
+
 </beans>
