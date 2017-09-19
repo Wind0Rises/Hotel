@@ -14,7 +14,9 @@ import org.apache.log4j.Logger;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,8 +40,9 @@ public class DepartmentController {
 	
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 	
-	/*@Autowired
-	private RedisTemplate<String, String> redisTemplate;*/
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
+	
 	@Autowired
 	private DepartmentService departmentService;
 
@@ -88,6 +91,7 @@ public class DepartmentController {
 	 * @return
 	 */
 	@RequestMapping("edit")
+	@Transactional
 	public ModelAndView edit(@RequestParam("id")String id){
 		ModelAndView mv = new ModelAndView("department/edit");
 		mv.addObject("department",departmentService.getById(id));
@@ -198,11 +202,10 @@ public class DepartmentController {
 			mv.addObject("departmentNo",departmentService.getById(id).getDepartmentNo());
 		}
 		
-		/*
-		 * String redString =  (String) redisTemplate.opsForHash().get("FF", "FF");
+		String redString =  (String) redisTemplate.opsForHash().get("FF", "FF");
 		logger.debug("++++++++++++++++++++++++++++++++++++++++++++++++"  + redString + "+++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println("==========================================" + redisTemplate.opsForValue().get("liuweianw") + "===========================================");
-		*/
+		
 		return mv;
 	}
 	

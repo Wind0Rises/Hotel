@@ -1,6 +1,7 @@
 package com.liu.ssm.controller;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +38,9 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
+	@Autowired
+	private RedisTemplate redisTemplate;
+	
 	/*@Autowired
 	private RabbitTemplate rabbitTemplate;*/
 
@@ -42,6 +48,10 @@ public class EmployeeController {
 	public ModelAndView list(){
 		
 		//rabbitTemplate.convertAndSend("employee.add", "This is employee.add!");
+		
+		
+		ValueOperations<String, String> operations = redisTemplate.opsForValue();
+		operations.set("zheshi", "asdfa");
 		
 		return new ModelAndView("employee/list");
 	}

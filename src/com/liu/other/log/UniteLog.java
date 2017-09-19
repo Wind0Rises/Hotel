@@ -25,6 +25,14 @@ public class UniteLog {
 				+ ">>>>>>>>>" + point.getSignature().getName() + ">>>>>>>>>执行开始");
 	}
 	
+	/**
+	 * 
+	 * @author LWA
+	 * @Descrition 环绕方法特定的参数
+	 * @date 2017-9-18 下午3:18:45
+	 * @param pjp
+	 * @throws Throwable
+	 */
 	public void aroundMethod(ProceedingJoinPoint pjp) throws Throwable {
 		System.out.println(pjp);
 		System.out.println("around start");

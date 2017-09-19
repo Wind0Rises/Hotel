@@ -4,6 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 		
 	<mapper namespace = "com.liu.ssm.mapper.EmployeeMapper">
+		<cache eviction="LRU" type="com.liu.other.cache.RedisCache" ></cache>
+	
 		<insert id="add" parameterType="employee" >
 			INSERT INTO `hotal_mana_emp`(id,employeeName,age,`date`,images,`status`,salary,reward,departmentNo,postNo,description,phone,email)
 			VALUES(#{id},#{employeeName},#{age},#{date},#{images},#{status},#{salary},#{reward},#{departmentNo},#{postNo},#{description},#{phone},#{email})

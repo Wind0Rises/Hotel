@@ -1,7 +1,14 @@
 package com.liu.ssm.pojo;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public String id;
 	
 	public String employeeName;

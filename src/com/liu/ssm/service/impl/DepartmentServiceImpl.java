@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,7 @@ import com.liu.ssm.service.DepartmentService;
 public class DepartmentServiceImpl implements DepartmentService{
 	
 	Logger logger = Logger.getLogger(DepartmentServiceImpl.class);
+	
 	
 	@Autowired
 	private DepartmentMapper departmentMapper;

@@ -1,6 +1,13 @@
 package com.liu.ssm.pojo;
 
-public class HotelRoom {
+import java.io.Serializable;
+
+public class HotelRoom implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	
 	private String roomNo;
